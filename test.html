@@ -10,7 +10,23 @@
 
 <body>
 
+
     <script src="https://code.jquery.com/jquery.js"></script>
+    <script>
+        var latitude = 34.0522342;
+        var longitude = -118.2436849;
+        var distance = 2;
+        var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/" + latitude + "/" + longitude + "/" + distance;
+
+        $.ajax({
+            url: queryURL,
+            method: "GET"
+        }).then(function (response) {
+            var obj = JSON.parse(response);
+            console.log(obj.products[0]);
+            //try to parse out the JSON information to specific data
+        });
+    </script>
 </body>
 
 </html>
