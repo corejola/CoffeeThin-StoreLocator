@@ -2,3 +2,11 @@
     height: 400px;
     width: 100%;
 }
+
+.text-center {
+    text-align: center;
+}
+
+.nav-wrapper {
+    background-color: #ed4699;
+}

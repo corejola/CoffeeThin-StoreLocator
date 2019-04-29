@@ -6,8 +6,13 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coffee Thins Store Locator</title>
-    <!-- Bootstrap -->
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <!-- MATERIALIZE -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
@@ -15,50 +20,29 @@
 </head>
 
 <body>
-    <div id="products"></div>
-    <div id="retailers"></div>
-    <div id="stores"></div>
-    <!DOCTYPE html>
-    <html lang="en">
-
     <!--creating grid system-->
     <div class="container">
 
         <!--row one: logo and nav bar-->
         <div class="row">
 
-            <!--column one: logo holder-->
-            <div class="col-md-5">
-
-                <div id="logo-holder">
-                    <img src="images/tierra-nueva-logo.png">
-                    <img src="images/coffee-squares.png">
-                </div>
-                <!--ends the logo holder-->
-            </div>
-            <!--end the column one-->
-
-            <div class="col-md-7">
-                <nav class="navbar navbar-expand-lg navbar-light bg-light">
-                    <!-- <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav"
-                                aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-                                <span class="navbar-toggler-icon"></span>
-                            </button> -->
-                    <div class="collapse navbar-collapse" id="navbarNav">
-                        <ul class="navbar-nav">
-                            <li class="nav-item active" style="color:#663600">
-                                <a class="nav-link" href="#">Products</a>
-                            </li>
-                            <li class="nav-item" style="color:#663600">
-                                <a class="nav-link" href="#">Press</a>
-                            </li>
-                            <li class="nav-item" style="color:#ed4699">
-                                <a class="nav-link" href="#">About Tierra Nueva</a>
-                            </li>
+            <div class="col m12">
+                <nav class="nav-extended">
+                    <div class="nav-wrapper">
+                        <img src="assets/images/Tierra-nueva-dunkin-assets/burst-coffee.png" width="75px" height="75px"
+                            class="brand-logo"></img>
+                        <a href="#" class="brand-logo">Tierra Nueva</a>
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                class="material-icons">menu</i></a>
+                        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <li><a href="sass.html">Products</a></li>
+                            <li><a href="badges.html">Press</a></li>
+                            <li><a href="collapsible.html">About Tierra Nueva</a></li>
                         </ul>
                     </div>
                 </nav>
             </div>
+            <!--end the column one-->
             <!--end colunm two: nav bar-->
         </div>
         <!--end row one-->
@@ -70,11 +54,10 @@
 
         <!--row will hold input fields and banner-->
         <div class="row">
-
-            <div class="col-md-7">
+            <div class="col m7">
                 <h3 class="text-center" style="color:#ed4699 "> Store Locator</h3>
                 <div class="row">
-                    <div class="col-md-6">
+                    <div class="col m6">
                         <form>
                             <!--input field 1-->
                             <div class="form-group">
@@ -84,21 +67,7 @@
                             </div>
                     </div>
 
-                    <div class="col-md-6">
-                        <!--drop down option-->
-                        <div class="dropdown">
-                            <button class="btn btn-secondary dropdown-toggle" type="button" id="dropdownMenuButton"
-                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                25 miles
-                            </button>
-                            <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                <a class="dropdown-item" href="#">5 miles</a>
-                                <a class="dropdown-item" href="#">10 miles</a>
-                                <a class="dropdown-item" href="#">15 miles</a>
-                                <a class="dropdown-item" href="#">25 miles</a>
-                            </div>
-                        </div>
-                        <!--input field 2-->
+                    <div class="col m6">
                         <form>
                             <div class="form-group">
                                 <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
@@ -107,7 +76,8 @@
 
                             <!--button to submit-->
                             <!-- <button class="btn btn-primary float-right" id="add-employee-btn">Submit</button> -->
-                            <input id="locate-button" type="submit" class="btn float-right"
+                            <input id="locate-button" type="submit"
+                                class="btn waves-effect waves-orange btn-flat float-right"
                                 style="background:#ed4699; color:white" value="Submit">
                         </form>
                     </div>
@@ -115,8 +85,8 @@
 
             </div>
             <!--end column one: input-->
-            <div class="col-md-5">
-                <image src="images/banner-photo.jpg">
+            <div class="col m5">
+                <img src="assets/images/banner-photo.jpg" width="100%">
             </div>
             <!--end column two: banner-->
 
@@ -132,7 +102,7 @@
         <div class="row">
 
             <!--column one: map-holder-->
-            <div class="col-md-8">
+            <div class="col m8">
 
                 <!--Bootstrap Google Custom Map-->
                 <div id="map">
@@ -141,7 +111,8 @@
                 <!--Google Maps ends map-holder-->
             </div>
             <!--ends column one: map-holder-->
-            <div class="col-md-4">
+            <div class="col m4">
+                <div id="JSON"></div>
             </div>
         </div>
         <!--end column two: locator-holder-->

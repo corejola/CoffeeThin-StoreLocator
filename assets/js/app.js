@@ -52,3 +52,25 @@ function initMap() {
 
     };
 };
+
+var latitude = 34.0522342;
+var longitude = -118.2436849;
+var distance = 25;
+var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/" + latitude + "/" + longitude + "/" + distance;
+
+$.ajax({
+    url: queryURL,
+    method: "GET"
+}).then(function (response) {
+    var obj = JSON.parse(response);
+    console.log(obj)
+    console.log(obj.stores[0].name);
+    console.log(obj.stores[0].products);
+    //try to parse out the JSON information to specific data
+
+    for (var i = 0; i < obj.stores.length; i++) {
+        $("#JSON").text(obj.stores[i])
+    }
+
+});
+
