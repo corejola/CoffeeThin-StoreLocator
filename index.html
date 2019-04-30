@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Coffee Thins Store Locator</title>
+    <!-- MATERIALIZE -->
+    <!-- Compiled and minified CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
+    <!-- Compiled and minified JavaScript -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <link rel="stylesheet" href="assets/css/style.css">
+    <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
+
+</head>
+
+<body>
+    <!--creating grid system-->
+    <div class="container">
+
+        <!--row one: logo and nav bar-->
+        <div class="row">
+
+            <div class="col m12">
+                <nav class="nav-extended">
+                    <div class="nav-wrapper">
+                        <img src="assets/images/Tierra-nueva-dunkin-assets/burst-coffee.png" width="75px" height="75px"
+                            class="brand-logo"></img>
+                        <a href="#" class="brand-logo">Tierra Nueva</a>
+                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
+                                class="material-icons">menu</i></a>
+                        <ul id="nav-mobile" class="right hide-on-med-and-down">
+                            <li><a href="sass.html">Products</a></li>
+                            <li><a href="badges.html">Press</a></li>
+                            <li><a href="collapsible.html">About Tierra Nueva</a></li>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+            <!--end the column one-->
+            <!--end colunm two: nav bar-->
+        </div>
+        <!--end row one-->
+    </div>
+    <!-- end container one-->
+
+    <!--container two-->
+    <div class="container">
+
+        <!--row will hold input fields and banner-->
+        <div class="row">
+            <div class="col m7">
+                <h3 class="text-center" style="color:#ed4699 "> Store Locator</h3>
+                <div class="row">
+                    <div class="col m6">
+                        <form>
+                            <!--input field 1-->
+                            <div class="form-group">
+                                <strong><label for="location" style="color:#663600">Address or Zip
+                                        Code</label></strong>
+                                <input class="form-control" id="location-input" placeholder="90095" type="text">
+                            </div>
+                    </div>
+
+                    <div class="col m6">
+                        <form>
+                            <div class="form-group">
+                                <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
+                                <input class="form-control" id="miles-input" placeholder="25 miles" type="text">
+                            </div>
+
+                            <!--button to submit-->
+                            <!-- <button class="btn btn-primary float-right" id="add-employee-btn">Submit</button> -->
+                            <input id="locate-button" type="submit"
+                                class="btn waves-effect waves-orange btn-flat float-right"
+                                style="background:#ed4699; color:white" value="Submit">
+                        </form>
+                    </div>
+                </div>
+
+            </div>
+            <!--end column one: input-->
+            <div class="col m5">
+                <img src="assets/images/banner-photo.jpg" width="100%">
+            </div>
+            <!--end column two: banner-->
+
+        </div>
+        <!--ends second row-->
+    </div>
+    <!--ends second container-->
+
+    <!--container three -->
+    <div class="container">
+
+        <!--row three: map-holder and locator-holder -->
+        <div class="row">
+
+            <!--column one: map-holder-->
+            <div class="col m8">
+
+                <!--Bootstrap Google Custom Map-->
+                <div id="map">
+                </div>
+                <!-- <div class="w-auto p-3" style="background-color: #eee;">Width auto</div> -->
+                <!--Google Maps ends map-holder-->
+            </div>
+            <!--ends column one: map-holder-->
+            <div class="col m4">
+                <div id="JSON"></div>
+            </div>
+        </div>
+        <!--end column two: locator-holder-->
+    </div>
+    <!--ends column three: scroll bar-->
+    </div>
+    <!--ends row three-->
+    </div>
+    <!-- ends container three -->
+
+    <script src="assets/js/app.js">
+    </script>
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&callback=initMap">
+        </script>
+</body>
+
+</html>

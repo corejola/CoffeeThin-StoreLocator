@@ -5,14 +5,97 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Project-01 Tierra Nueva API Test </title>
+    <title>Project-01 Tierra Nueva API Map Test </title>
+
+    <style>
+        #map {
+            height: 300px;
+            width: 100%;
+        }
+    </style>
 </head>
 
 <body>
-
+    <h2>Google Map Test</h2>
+    <div id="map"></div>
+    <h2>Tierra Nueva Test</h2>
+    <div id="storeLocator"></div>
 
     <script src="https://code.jquery.com/jquery.js"></script>
     <script>
+
+        function initMap() {
+            var options = {
+                zoom: 10,
+                center: { lat: 34.0522, lng: -118.2437 }
+            }
+            // var map = new google.maps.Map($('#map'), options);
+            //issues with using map api & jquery...
+            var map = new google.maps.Map(document.getElementById('map'), options);
+
+            // var marker = new google.maps.Marker({
+            //     position: { lat: 34.0407, lng: -118.2468 },
+            //     map: map,
+            //     //use custom marker with branding
+            //     icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+            // });
+
+            // var infoWindow = new google.maps.InfoWindow({
+            //     content: '<p> Tierra Nueva Information Here</p>'
+            // })
+            // //google places to populate store information for infoWindow
+
+            // marker.addListener('click', function () {
+            //     infoWindow.open(map, marker);
+            // });
+            var marker = [
+                {
+                    coords: { lat: 34.0522, lng: -118.2437 },
+                    iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                    content: '<h3> Store Location Information Here</h3>'
+                },
+                {
+                    coords: { lat: 34.0689, lng: -118.4452 },
+                    iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                    content: '<h3> Store Location Information Here</h3>'
+                },
+                {
+                    coords: { lat: 34.0195, lng: -118.4912 },
+                    iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
+                    content: '<h3> Store Location Information Here</h3>'
+                }
+
+            ]
+            for (var i = 0; i < marker.length; i++) {
+                addMarker(marker[i]);
+            }
+
+            //add marker function
+            function addMarker(props) {
+                var marker = new google.maps.Marker({
+                    position: props.coords,
+                    map: map,
+                    // icon: props.iconImage
+                });
+                //checks for icon image
+                if (props.iconImage) {
+                    //set icon image
+                    marker.setIcon(props.iconImage);
+                }
+                // similar check for content...
+                if (props.content) {
+                    var infoWindow = new google.maps.InfoWindow({
+                        content: props.content
+                    });
+
+                    marker.addListener('click', function () {
+                        infoWindow.open(map, marker);
+                    });
+                }
+
+            }
+        };
+
         var latitude = 34.0522342;
         var longitude = -118.2436849;
         var distance = 2;
@@ -23,10 +106,18 @@
             method: "GET"
         }).then(function (response) {
             var obj = JSON.parse(response);
-            console.log(obj.products[0]);
+            console.log(obj.retailers[0].name);
+            console.log(obj.products[0].title);
             //try to parse out the JSON information to specific data
         });
+
     </script>
+
+    <!--  Google map API AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&callback=initMap">
+        </script>
+
 </body>
 
 </html>
