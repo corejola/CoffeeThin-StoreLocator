@@ -1,6 +1,4 @@
 //initMap lat/lng should be based off the user zip code input
-
-
 function initMap() {
     var options = {
         zoom: 10,
@@ -34,7 +32,7 @@ function initMap() {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     }
-
+    //test code for marker
     var marker = [
         {
             coords: { lat: 34.0522, lng: -118.2437 },
@@ -77,7 +75,6 @@ function initMap() {
                 infoWindow.open(map, marker);
             });
         };
-
     };
 };
 
@@ -89,53 +86,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 };
 
-// var marker = [
-//     {
-//         coords: { lat: 34.0522, lng: -118.2437 },
-//         iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-//         content: '<h3> Store Location Information Here</h3>'
-//     },
-//     {
-//         coords: { lat: 34.0689, lng: -118.4452 },
-//         // iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-//         content: '<h3> Store Location Information Here</h3>'
-//     },
-//     {
-//         coords: { lat: 34.0195, lng: -118.4912 },
-//         iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-//         content: '<h3> Store Location Information Here</h3>'
-//     }
-// ];
-// for (var i = 0; i < marker.length; i++) {
-//     addMarker(marker[i]);
-// };
-// //add marker function
-// function addMarker(props) {
-//     var marker = new google.maps.Marker({
-//         position: props.coords,
-//         map: map,
-//         // icon: props.iconImage
-//     });
-//     //checks for icon image
-//     if (props.iconImage) {
-//         //set icon image
-//         marker.setIcon(props.iconImage);
-//     }
-//     // similar check for content...
-//     if (props.content) {
-//         var infoWindow = new google.maps.InfoWindow({
-//             content: props.content
-//         });
-
-//         marker.addListener('click', function () {
-//             infoWindow.open(map, marker);
-//         });
-//     };
-
-// };
-
-
-
+//test information for Store Locator API
 var zip = $('#location-input').val
 var latitude = 34.0522342;
 var longitude = -118.2436849;
@@ -146,44 +97,14 @@ $.ajax({
     url: queryURL,
     method: "GET"
 }).then(function (response) {
-    // var obj = JSON.parse(response);
-    // console.log(obj)
-    // console.log(obj.stores[0].lat);
-    // console.log(obj.stores[0].lng);
-    // // var storeLat = obj.stores[0].lat
-    // // var storeLng = obj.stores[0].lng;
-    // //try to parse out the JSON information to specific data
 
-    // for (var i = 0; i < obj.stores.length; i++) {
-    //     $("#JSON").html(obj.stores[i])
-    // }
-
-    //    console.log(typeof response);
     console.log(JSON.parse(response));
     var JSONObject = JSON.parse(response);
     var products = JSONObject.products;
     var retailers = JSONObject.retailers;
     var stores = JSONObject.stores;
     console.log(products);
-
-    // 1. generate html markup for retailers
-    // 2. append html
-    for (var i = 0; i < JSONObject.products.length; i++) {
-        var productName = JSONObject.products[i].name;
-        var productID = JSONObject.products[i].id;
-        var productTitle = JSONObject.products[i].title;
-        console.log(productName);
-        console.log(productID);
-        console.log(productTitle);
-    }
-
-    for (var i = 0; i < JSONObject.retailers.length; i++) {
-        var retailerName = JSONObject.retailers[i].name;
-        var retailerID = JSONObject.retailers[i].id;
-        console.log(retailerName);
-        console.log(retailerID);
-    }
-
+    //loop through store locations
     for (var i = 0; i < JSONObject.stores.length; i++) {
         var storeAddress = JSONObject.stores[i].address;
         var storeCity = JSONObject.stores[i].city;
@@ -196,18 +117,18 @@ $.ajax({
         var storeRetailer = JSONObject.stores[i].retailer;
         var storeState = JSONObject.stores[i].state;
         var storeZip = JSONObject.stores[i].zip;
-        console.log(storeAddress);
-        console.log(storeCity);
-        console.log(storeCountry);
-        console.log(storeDistance);
-        console.log(storeID);
-        console.log(storeLatitude);
-        console.log(storeLongitude);
-        console.log(storeProducts);
-        console.log(storeRetailer);
-        console.log(storeState);
-        console.log(storeZip);
     }
+    // 1. loop through specific products per store
+    for (var i = 0; i < JSONObject.products.length; i++) {
+        var productName = JSONObject.products[i].name;
+        var productID = JSONObject.products[i].id;
+        var productTitle = JSONObject.products[i].title;
 
+    }
+    // loop throug specific retailer per store
+    for (var i = 0; i < JSONObject.retailers.length; i++) {
+        var retailerName = JSONObject.retailers[i].name;
+        var retailerID = JSONObject.retailers[i].id;
+    }
 });
 
