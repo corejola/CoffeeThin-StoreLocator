@@ -1,6 +1,4 @@
 //initMap lat/lng should be based off the user zip code input
-
-
 function initMap() {
     var options = {
         zoom: 10,
@@ -13,27 +11,6 @@ function initMap() {
     var map, infoWindow;
 
     infoWindow = new google.maps.InfoWindow;
-
-    // if (navigator.geolocation) {
-    //     navigator.geolocation.getCurrentPosition(function (position) {
-
-    //         // stores coordinates into a variable
-    //         var pos = {
-    //             lat: position.coords.latitude,
-    //             lng: position.coords.longitude
-    //         };
-
-    //         infoWindow.setPosition(pos);
-    //         infoWindow.setContent('Location found.');
-    //         infoWindow.open(map);
-    //         map.setCenter(pos);
-    //     }, function () {
-    //         handleLocationError(true, infoWindow, map.getCenter());
-    //     });
-    // } else {
-    //     // Browser doesn't support Geolocation
-    //     handleLocationError(false, infoWindow, map.getCenter());
-    // }
 
     var marker = [
         {
@@ -119,17 +96,6 @@ $.ajax({
         var storeRetailer = JSONObject.stores[i].retailer;
         var storeState = JSONObject.stores[i].state;
         var storeZip = JSONObject.stores[i].zip;
-        console.log("Store Address is " + storeAddress);
-        console.log("Store City is " + storeCity);
-        console.log("Store County is " + storeCountry);
-        console.log("Store Distance is " + storeDistance);
-        console.log("Store ID is " + storeID);
-        console.log("Store Lat is " + storeLatitude);
-        console.log("Store Long is " + storeLongitude);
-        console.log("Store Products is " + storeProducts);
-        console.log("Store Retailer is " + storeRetailer);
-        console.log("Store State is " + storeState);
-        console.log("Store Zip is " + storeZip);
 
         var names = $("<div>").append(
             $('<p>').text(JSONObject.stores[i].address),
@@ -147,30 +113,12 @@ $.ajax({
         var productName = JSONObject.products[i].name;
         var productID = JSONObject.products[i].id;
         var productTitle = JSONObject.products[i].title;
-        console.log("Product Name is " + productName);
-        console.log("Product ID is " + productID);
-        console.log("Product Title is " + productTitle);
     }
 
     for (var i = 0; i < JSONObject.retailers.length; i++) {
         var retailerName = JSONObject.retailers[i].name;
         var retailerID = JSONObject.retailers[i].id;
-        console.log("Retailer Name is " + retailerName);
-        console.log("Retailer ID is " + retailerID);
-
     }
-
-    // var storeList = $('<p>').append(
-    //     $('<p>').text(retailerName),
-    //     $('<p>').text(storeAddress),
-    //     $('<p>').text(storeState + " " + storeZip),
-    //     $('<p>').text("Coffee Thins Carried: " + productTitle),
-    //     $('<p>').text(Math.floor(storeDistance) + " Miles"),
-    //     $('<p>').text("TBD"),
-    // );
-
-    // $('#JSON').append(storeList)
-
 
 });
 
