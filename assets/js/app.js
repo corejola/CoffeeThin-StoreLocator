@@ -1,5 +1,8 @@
 //initMap lat/lng should be based off the user zip code input
-
+var map;
+var markers = [];
+var infoWindow;
+var locationSelect;
 
 function initMap() {
     var options = {
@@ -35,6 +38,17 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
+    var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/34.0522342/-118.2436849/5";
+    $.ajax({
+        url: queryURL,
+        method: "GET"
+    }).then(function (response) {
+    });
+    // Make request to API and get response before this point.
+    var json = response.getContentText();
+    var data = JSON.parse(json);
+    console.log(data);
+
     var marker = [
         {
             coords: { lat: 34.0522, lng: -118.2437 },
@@ -52,6 +66,8 @@ function initMap() {
             content: '<h3> Store Location Information Here</h3>'
         }
     ];
+
+
     for (var i = 0; i < marker.length; i++) {
         addMarker(marker[i]);
     };
@@ -136,7 +152,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 
 
 
-var zip = $('#location-input').val
+var zip = $('#location-input').val()
 var latitude = 34.0522342;
 var longitude = -118.2436849;
 var distance = 25;
