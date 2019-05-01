@@ -67,8 +67,11 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 };
 
 var zip = $('#location-input').val
+//latitue & longitude to be replaced by user input
 var latitude = 34.0522342;
 var longitude = -118.2436849;
+//distance to be replaced with user input
+// $('#miles-input').val().trim()
 var distance = 10;
 var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/" + latitude + "/" + longitude + "/" + distance;
 
@@ -81,43 +84,46 @@ $.ajax({
     var products = JSONObject.products;
     var retailers = JSONObject.retailers;
     var stores = JSONObject.stores;
-    console.log();
+
 
     //loop through Store Locator for Stores
-    for (var i = 0; i < JSONObject.stores.length; i++) {
-        var storeAddress = JSONObject.stores[i].address;
-        var storeCity = JSONObject.stores[i].city;
-        var storeCountry = JSONObject.stores[i].country;
-        var storeDistance = JSONObject.stores[i].distance;
-        var storeID = JSONObject.stores[i].id;
-        var storeLatitude = JSONObject.stores[i].lat;
-        var storeLongitude = JSONObject.stores[i].lng;
-        var storeProducts = JSONObject.stores[i].products;
-        var storeRetailer = JSONObject.stores[i].retailer;
-        var storeState = JSONObject.stores[i].state;
-        var storeZip = JSONObject.stores[i].zip;
+    for (var i = 0; i < stores.length; i++) {
+        var storeAddress = stores[i].address;
+        var storeCity = stores[i].city;
+        var storeCountry = stores[i].country;
+        var storeDistance = stores[i].distance;
+        var storeID = stores[i].id;
+        var storeLatitude = stores[i].lat;
+        var storeLongitude = stores[i].lng;
+        var storeProducts = stores[i].products;
+        var storeRetailer = stores[i].retailer;
+        var storeState = stores[i].state;
+        var storeZip = stores[i].zip;
 
         var names = $("<div>").append(
-            $('<p>').text(JSONObject.stores[i].address),
-            $('<p>').text(JSONObject.stores[i].city + ", "),
-            $('<p>').text(Math.floor(JSONObject.stores[i].distance) + " Miles Away")
+            $('<p>').text(storeRetailer),
+            $('<p>').text(storeAddress),
+            $('<p>').text(storeCity + ", "),
+            $('<p>').text(Math.floor(storeDistance) + " Miles Away")
         )
-
         $('#JSON').append(names)
+    }
+    //Research lodash in order to find the information from Retailer & Products objects
 
+    //retailer id from JSONObject is associated with store.retailer#
+    // these loops will most likely be removed
+    //Retailer & Products collections to be called on using lodash
+    for (var i = 0; i < retailers.length; i++) {
+        var retailerName = retailers[i].name;
+        var retailerID = retailers[i].id;
+        console.log(retailerID + " = " + retailerName)
     }
 
-    // 1. need to for/in loop through the product information based on the specific store product
-    // 2. need to for/in loop through the retailers based on the store retailer id
-    for (var i = 0; i < JSONObject.products.length; i++) {
-        var productName = JSONObject.products[i].name;
-        var productID = JSONObject.products[i].id;
-        var productTitle = JSONObject.products[i].title;
-    }
-
-    for (var i = 0; i < JSONObject.retailers.length; i++) {
-        var retailerName = JSONObject.retailers[i].name;
-        var retailerID = JSONObject.retailers[i].id;
+    for (var i = 0; i < products.length; i++) {
+        var productName = products[i].name;
+        var productID = products[i].id;
+        var productTitle = products[i].title;
+        console.log(productID + " " + productName + " " + productTitle)
     }
 
 });
