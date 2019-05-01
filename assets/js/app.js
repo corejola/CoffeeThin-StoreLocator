@@ -1,16 +1,13 @@
-//initMap lat/lng should be based off the user zip code input
 var map;
 var markers = [];
 var infoWindow;
-var locationSelect;
 
 function initMap() {
     var options = {
         zoom: 10,
         center: { lat: 34.0522, lng: -118.2437 }
     };
-    // var map = new google.maps.Map($('#map'), options);
-    //issues with using map api & jquery...
+
     map = new google.maps.Map(document.getElementById('map'), options);
 
     infoWindow = new google.maps.InfoWindow;
@@ -19,16 +16,19 @@ function initMap() {
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
 
-            // stores coordinates into a variable
+            // stores user coordinates into a variable
             var pos = {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
 
+            // displays infowindow for user location
             infoWindow.setPosition(pos);
-            infoWindow.setContent('Location found.');
+            infoWindow.setContent('You are here');
             infoWindow.open(map);
             map.setCenter(pos);
+
+            // handles errors when user does not agree to let browser use their location
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -37,34 +37,74 @@ function initMap() {
         handleLocationError(false, infoWindow, map.getCenter());
     }
 
-    var zip = $('#location-input').val();
-    var latitude = 34.0522342;
-    var longitude = -118.2436849;
-    var distance = 25;
-    var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/" + latitude + "/" + longitude + "/" + distance;
-
-    function storeMarkers() {
-        $.ajax({
-            url: queryURL,
-            method: "GET"
-        }).then(function (response) {
-
-            console.log(JSON.parse(response));
-            var JSONObject = JSON.parse(response);
-
-            for (var i = 0; i < JSONObject.stores.length; i++) {
-
-                var storesLat = JSONObject.stores[i].lat;
-                var storesLng = JSONObject.stores[i].lng;
-
-                var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map });
-
-            };
-
-        });
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
     };
 
-    storeMarkers();
+    var geocoder = new google.maps.Geocoder();
+
+    document.getElementById('locate-button').addEventListener('click', function () {
+        geocodeAddress(geocoder, map);
+    });
+
+    // function to search addresses/locations
+    function geocodeAddress(geocoder, resultsMap) {
+
+        var address = document.getElementById('location-input').value;
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                // commented this out because it placed a marker at search location
+                // var marker = new google.maps.Marker({
+                //     map: resultsMap,
+                //     position: results[0].geometry.location
+                // });
+
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+
+            console.log(results[0].geometry.location.lat());
+
+            // Query parameters for pulling store locator API
+            var key = "dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9";
+            var latitude = results[0].geometry.location.lat();
+            var longitude = results[0].geometry.location.lng();
+            var distance = document.getElementById('miles-input').value;;
+            var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/" + key + "/get-stores/" + latitude + "/" + longitude + "/" + distance;
+
+            // display markers for nearby store locations
+            function storeMarkers() {
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function (response) {
+
+                    console.log(JSON.parse(response));
+                    var JSONObject = JSON.parse(response);
+
+                    for (var i = 0; i < JSONObject.stores.length; i++) {
+
+                        var storesLat = JSONObject.stores[i].lat;
+                        var storesLng = JSONObject.stores[i].lng;
+
+                        var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map });
+
+                    };
+
+                });
+            };
+
+            storeMarkers();
+
+        });
+
+    };
+};
 
     // var marker = [
     //     {
@@ -112,119 +152,4 @@ function initMap() {
     //     };
 
     // };
-};
-
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-};
-
-
-// var zip = $('#location-input').val();
-// var latitude = 34.0522342;
-// var longitude = -118.2436849;
-// var distance = 5;
-// var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/" + latitude + "/" + longitude + "/" + distance;
-
-// function findLocation() {
-//     $.ajax({
-//         url: queryURL,
-//         method: "GET"
-//     }).then(function (response) {
-
-//         console.log(JSON.parse(response));
-//         var JSONObject = JSON.parse(response);
-//         // var products = JSONObject.products;
-//         // var retailers = JSONObject.retailers;
-//         // var stores = JSONObject.stores;
-//         // console.log(products);
-
-//         // 1. generate html markup for retailers
-//         // 2. append html
-//         for (var i = 0; i < JSONObject.products.length; i++) {
-//             var productName = JSONObject.products[i].name;
-//             var productID = JSONObject.products[i].id;
-//             var productTitle = JSONObject.products[i].title;
-//             // console.log(productName);
-//             // console.log(productID);
-//             // console.log(productTitle);
-//         }
-
-//     });
-// };
-
-// findLocation();
-
-
-// $.ajax({
-//     url: queryURL,
-//     method: "GET"
-// }).then(function (response) {
-//     // var obj = JSON.parse(response);
-//     // console.log(obj)
-//     // console.log(obj.stores[0].lat);
-//     // console.log(obj.stores[0].lng);
-//     // // var storeLat = obj.stores[0].lat
-//     // // var storeLng = obj.stores[0].lng;
-//     // //try to parse out the JSON information to specific data
-
-//     // for (var i = 0; i < obj.stores.length; i++) {
-//     //     $("#JSON").html(obj.stores[i])
-//     // }
-
-//     //    console.log(typeof response);
-//     console.log(JSON.parse(response));
-//     var JSONObject = JSON.parse(response);
-//     var products = JSONObject.products;
-//     var retailers = JSONObject.retailers;
-//     var stores = JSONObject.stores;
-//     console.log(products);
-
-//     // 1. generate html markup for retailers
-//     // 2. append html
-//     for (var i = 0; i < JSONObject.products.length; i++) {
-//         var productName = JSONObject.products[i].name;
-//         var productID = JSONObject.products[i].id;
-//         var productTitle = JSONObject.products[i].title;
-//         console.log(productName);
-//         console.log(productID);
-//         console.log(productTitle);
-//     }
-
-//     for (var i = 0; i < JSONObject.retailers.length; i++) {
-//         var retailerName = JSONObject.retailers[i].name;
-//         var retailerID = JSONObject.retailers[i].id;
-//         console.log(retailerName);
-//         console.log(retailerID);
-//     }
-
-//     for (var i = 0; i < JSONObject.stores.length; i++) {
-//         var storeAddress = JSONObject.stores[i].address;
-//         var storeCity = JSONObject.stores[i].city;
-//         var storeCountry = JSONObject.stores[i].country;
-//         var storeDistance = JSONObject.stores[i].distance;
-//         var storeID = JSONObject.stores[i].id;
-//         var storeLatitude = JSONObject.stores[i].lat;
-//         var storeLongitude = JSONObject.stores[i].lng;
-//         var storeProducts = JSONObject.stores[i].products;
-//         var storeRetailer = JSONObject.stores[i].retailer;
-//         var storeState = JSONObject.stores[i].state;
-//         var storeZip = JSONObject.stores[i].zip;
-//         console.log(storeAddress);
-//         console.log(storeCity);
-//         console.log(storeCountry);
-//         console.log(storeDistance);
-//         console.log(storeID);
-//         console.log(storeLatitude);
-//         console.log(storeLongitude);
-//         console.log(storeProducts);
-//         console.log(storeRetailer);
-//         console.log(storeState);
-//         console.log(storeZip);
-//     }
-
-// });
 
