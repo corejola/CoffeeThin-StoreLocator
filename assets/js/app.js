@@ -2,12 +2,14 @@ var map;
 var markers = [];
 var infoWindow;
 
+// initializes the map when page loads
 function initMap() {
     var options = {
         zoom: 10,
         center: { lat: 34.0522, lng: -118.2437 }
     };
 
+    // stores new map object into a variable
     map = new google.maps.Map(document.getElementById('map'), options);
 
     infoWindow = new google.maps.InfoWindow;
@@ -22,21 +24,31 @@ function initMap() {
                 lng: position.coords.longitude
             };
 
-            // displays infowindow for user location
+            // displays infowindow for user location when detected
             infoWindow.setPosition(pos);
             infoWindow.setContent('You are here');
             infoWindow.open(map);
             map.setCenter(pos);
 
-            // handles errors when user does not agree to let browser use their location
+            // places marker at user location when their location is detected
+            var marker = new google.maps.Marker({
+                position: pos,
+                map: map,
+                icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+            });
+
+            markers.push(marker);
+
+            // handles errors when user does not agree to let browser detect their location
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
-    }
+    };
 
+    // notification geolocation service fails
     function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
         infoWindow.setContent(browserHasGeolocation ?
@@ -45,9 +57,24 @@ function initMap() {
         infoWindow.open(map);
     };
 
+    // Autocomplete function
+    var input = document.getElementById('location-input');
+
+    var autocomplete = new google.maps.places.Autocomplete(input);
+
+    autocomplete.addListener('place_changed', function () {
+        var place = autocomplete.getPlace();
+        document.getElementById('location-snap').innerHTML = place.formatted_address;
+        document.getElementById('lat-span').innerHTML = place.geometry.location.lat();
+        document.getElementById('lon-span').innerHTML = place.geometry.location.lng();
+    });
+
+    // stores new Geocoder object into a variable
     var geocoder = new google.maps.Geocoder();
 
     document.getElementById('locate-button').addEventListener('click', function () {
+        // removes markers after submitting new search
+        removeMarkers();
         geocodeAddress(geocoder, map);
     });
 
@@ -55,18 +82,22 @@ function initMap() {
     function geocodeAddress(geocoder, resultsMap) {
 
         var address = document.getElementById('location-input').value;
+
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status === 'OK') {
                 resultsMap.setCenter(results[0].geometry.location);
-                // commented this out because it placed a marker at search location
-                // var marker = new google.maps.Marker({
-                //     map: resultsMap,
-                //     position: results[0].geometry.location
-                // });
+                // places a marker at user input location
+                var marker = new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location,
+                    icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
+                });
+
+                markers.push(marker);
 
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
-            }
+            };
 
             console.log(results[0].geometry.location.lat());
 
@@ -77,7 +108,7 @@ function initMap() {
             var distance = document.getElementById('miles-input').value;;
             var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/" + key + "/get-stores/" + latitude + "/" + longitude + "/" + distance;
 
-            // display markers for nearby store locations
+            // display markers for nearby store locations relative to searched location
             function storeMarkers() {
                 $.ajax({
                     url: queryURL,
@@ -91,9 +122,24 @@ function initMap() {
 
                         var storesLat = JSONObject.stores[i].lat;
                         var storesLng = JSONObject.stores[i].lng;
+                        var storesName = JSONObject.retailers[i].name;
+                        var storesAddress = JSONObject.retailers[i].name;
+                        var storesCity = JSONObject.retailers[i].name;
+                        var storesZip = JSONObject.retailers[i].name;
+                        var storesProducts = JSONObject.retailers[i].name;
 
                         var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map });
 
+                        markers.push(marker);
+
+                        marker.info = new google.maps.InfoWindow({
+                            content: '<span>' + storesName + '<br>' + storesAddress + '<br>' + storesCity + '<br>' + storesZip + '<br>' + storesProducts + '</span>'
+                        });
+
+                        marker.addListener('click', function () {
+                            console.log("marker was pressed");
+                            marker.info.open(map, marker)
+                        });
                     };
 
                 });
@@ -104,52 +150,12 @@ function initMap() {
         });
 
     };
+
+    // removes markers after submitting new search
+    function removeMarkers() {
+        for (i = 0; i < markers.length; i++) {
+            markers[i].setMap(null);
+        }
+    };
 };
-
-    // var marker = [
-    //     {
-    //         coords: { lat: 34.0522, lng: -118.2437 },
-    //         iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-    //         content: '<h3> Store Location Information Here</h3>'
-    //     },
-    //     {
-    //         coords: { lat: 34.0689, lng: -118.4452 },
-    //         // iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-    //         content: '<h3> Store Location Information Here</h3>'
-    //     },
-    //     {
-    //         coords: { lat: 34.0195, lng: -118.4912 },
-    //         iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-    //         content: '<h3> Store Location Information Here</h3>'
-    //     }
-    // ];
-
-
-    // for (var i = 0; i < marker.length; i++) {
-    //     addMarker(marker[i]);
-    // };
-    // //add marker function
-    // function addMarker(props) {
-    //     var marker = new google.maps.Marker({
-    //         position: props.coords,
-    //         map: map,
-    //         // icon: props.iconImage
-    //     });
-    //     //checks for icon image
-    //     if (props.iconImage) {
-    //         //set icon image
-    //         marker.setIcon(props.iconImage);
-    //     }
-    //     // similar check for content...
-    //     if (props.content) {
-    //         var infoWindow = new google.maps.InfoWindow({
-    //             content: props.content
-    //         });
-
-    //         marker.addListener('click', function () {
-    //             infoWindow.open(map, marker);
-    //         });
-    //     };
-
-    // };
 
