@@ -81,6 +81,9 @@ $.ajax({
 }).then(function (response) {
     console.log(JSON.parse(response));
     var JSONObject = JSON.parse(response);
+
+
+    //This portion to be merged with the master
     var products = JSONObject.products;
     var retailers = JSONObject.retailers;
     var stores = JSONObject.stores;
@@ -89,17 +92,8 @@ $.ajax({
     //loop through Store Locator for Stores
     for (var i = 0; i < stores.length; i++) {
         var storeAddress = stores[i].address;
-        var storeCity = stores[i].city;
-        var storeCountry = stores[i].country;
         var storeDistance = stores[i].distance;
-        var storeID = stores[i].id;
-        var storeLatitude = stores[i].lat;
-        var storeLongitude = stores[i].lng;
-        var storeProducts = stores[i].products;
         var storeRetailer = stores[i].retailer;
-        var storeState = stores[i].state;
-        var storeZip = stores[i].zip;
-
         var names = $("<div>").append(
             $('<p>').text(storeRetailer),
             $('<p>').text(storeAddress),
@@ -108,6 +102,8 @@ $.ajax({
         )
         $('#JSON').append(names)
     }
+    //end of portion to be merged with the master
+
     //Research lodash in order to find the information from Retailer & Products objects
 
     //retailer id from JSONObject is associated with store.retailer#
