@@ -40,6 +40,9 @@ function initMap() {
     var latitude = 34.0522342;
     var longitude = -118.2436849;
     var distance = 25;
+    var retailerStoreName = [];
+    var retailerStoreID = [];
+    var coffeeProduct = [];
     var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/" + latitude + "/" + longitude + "/" + distance;
 
     function storeMarkers() {
@@ -47,17 +50,23 @@ function initMap() {
             url: queryURL,
             method: "GET"
         }).then(function (response) {
-
             console.log(JSON.parse(response));
             var JSONObject = JSON.parse(response);
+            // _.find((JSONObject), function (item) {
+            //     return item.id === 1;
+            // });
             for (var i = 0; i < JSONObject.retailers.length; i++) {
                 var retailerName = JSONObject.retailers[i].name;
                 var retailerID = JSONObject.retailers[i].id;
-                };
+                // retailerStoreName.push(retailerName);
+                // console.log(retailerStoreName);
+                // retailerStoreID.push(retailerID);
+            };
             for (var i = 0; i < JSONObject.products.length; i++) {
                 var productName = JSONObject.products[i].name;
                 var productID = JSONObject.products[i].id;
                 var productTitle = JSONObject.products[i].title;
+                // coffeeProduct.push(productID)
             };
             for (var i = 0; i < JSONObject.stores.length; i++) {
                 var storesLat = JSONObject.stores[i].lat;
@@ -71,18 +80,26 @@ function initMap() {
                 var storeZip = JSONObject.stores[i].zip;
                 
                 // if (storeProducts === "[2,1]" || storeProducts === "[1,2]" ) {
-                //     var products = productTitle}
-                //     else if (storeProducts === "2,1]" || storeProducts === "[1,2]" )
+                //     var products = JSONObject.products[0].title, JSONObject.products[1].title
+                //  else if (storeProducts === "[2]") {
+                //     var products = "Caramel";
+                // // }
+                // // else {
+                //     var products = "Original Blend";
                 // }
-                if (storeRetailer === retailerID) {
-                    var storeName = retailerName
+               
+                // console.log(retailerID);
+                // STORE CHECK: CVS: 6588 Foothill BlvdTujunga, CA 91042
+                if (storeRetailer === retailerStoreID) {
+                    var storeName = retailerStoreName
                 }
-                
+                // console.log(retailerID);
+// LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS, INFOWINDOW FOR MARKERS THAT SHOW FOR STORE LOCATIONS (MISSING STORE NAME & STORE PRODUCTS)
                 let marker = new google.maps.Marker(
                     { 
                         position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, 
                         map: map,
-                        // icon: 'pin.png',
+                        // icon: ,
                         animation: google.maps.Animation.BOUNCE
                     });
                 marker.info = new google.maps.InfoWindow({
@@ -92,14 +109,15 @@ function initMap() {
                 marker.addListener('click', function(){
                     console.log("marker was pressed");
                     marker.info.open(map, marker)  
+                
+                // marker.addListener ('click, toggleBounce');
                 });
-            // STORE CHECK: CVS: 6588 Foothill BlvdTujunga, CA 91042
             };
         });
     };
     storeMarkers();
 };
-   
+// LORRIE: (END) OF CODE SNIPPET FOR BOUNCING ON MARKERS, INFOWINDOW FOR MARKERS THAT SHOW FOR STORE LOCATIONS (MISSING STORE NAME & STORE PRODUCTS)  
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
         infoWindow.setPosition(pos);
