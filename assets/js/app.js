@@ -69,6 +69,8 @@ function initMap() {
                 // coffeeProduct.push(productID)
             };
             for (var i = 0; i < JSONObject.stores.length; i++) {
+                // NESTED FOR LOOP TO COMPARE DATA
+                // for (var j = 0); j ,
                 var storesLat = JSONObject.stores[i].lat;
                 var storesLng = JSONObject.stores[i].lng;
                 var storeAddress = JSONObject.stores[i].address;
@@ -78,7 +80,20 @@ function initMap() {
                 var storeRetailer = JSONObject.stores[i].retailer;
                 var storeState = JSONObject.stores[i].state;
                 var storeZip = JSONObject.stores[i].zip;
-                
+                // var storeCountry = JSONObject.stores[i].country;
+                // var storeDistance = JSONObject.stores[i].distance;
+
+                // for (var i = 0; i < JSONObject.stores.length; i++) {
+                    //  var storeAddress = JSONObject.stores[i].address;
+                    //  var storeCity = JSONObject.stores[i].city;
+                        
+                // for (var i = 0; i < JSONObject.retailers.length; i++) {
+                    //  var retailerName = JSONObject.retailers[i].name;
+                    //  var retailerID = JSONObject.retailers[i].id;
+                    //  console.log(retailerName);
+                    //  console.log(retailerID);
+                    // }
+
                 // if (storeProducts === "[2,1]" || storeProducts === "[1,2]" ) {
                 //     var products = JSONObject.products[0].title, JSONObject.products[1].title
                 //  else if (storeProducts === "[2]") {
@@ -146,25 +161,9 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 //         console.log(productTitle);
 //     }
 
-//     for (var i = 0; i < JSONObject.retailers.length; i++) {
-//         var retailerName = JSONObject.retailers[i].name;
-//         var retailerID = JSONObject.retailers[i].id;
-//         console.log(retailerName);
-//         console.log(retailerID);
-//     }
+//     
 
-//     for (var i = 0; i < JSONObject.stores.length; i++) {
-//         var storeAddress = JSONObject.stores[i].address;
-//         var storeCity = JSONObject.stores[i].city;
-//         var storeCountry = JSONObject.stores[i].country;
-//         var storeDistance = JSONObject.stores[i].distance;
-//         var storeID = JSONObject.stores[i].id;
-//         var storeLatitude = JSONObject.stores[i].lat;
-//         var storeLongitude = JSONObject.stores[i].lng;
-//         var storeProducts = JSONObject.stores[i].products;
-//         var storeRetailer = JSONObject.stores[i].retailer;
-//         var storeState = JSONObject.stores[i].state;
-//         var storeZip = JSONObject.stores[i].zip;
+//    
 //         console.log(storeAddress);
 //         console.log(storeCity);
 //         console.log(storeCountry);
