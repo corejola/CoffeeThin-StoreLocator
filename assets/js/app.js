@@ -1,97 +1,106 @@
-//initMap lat/lng should be based off the user zip code input
+
+
+var map;
+var markers = [];
+var infoWindow;
+
 function initMap() {
     var options = {
         zoom: 10,
         center: { lat: 34.0522, lng: -118.2437 }
     };
-    // var map = new google.maps.Map($('#map'), options);
-    //issues with using map api & jquery...
-    var map = new google.maps.Map(document.getElementById('map'), options);
 
-    var map, infoWindow;
+    map = new google.maps.Map(document.getElementById('map'), options);
 
     infoWindow = new google.maps.InfoWindow;
 
-    var marker = [
-        {
-            coords: { lat: 34.0522, lng: -118.2437 },
-            iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-            content: '<h3> Store Location Information Here</h3>'
-        },
-        {
-            coords: { lat: 34.0689, lng: -118.4452 },
-            // iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-            content: '<h3> Store Location Information Here</h3>'
-        },
-        {
-            coords: { lat: 34.0195, lng: -118.4912 },
-            iconImage: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png',
-            content: '<h3> Store Location Information Here</h3>'
-        }
-    ];
-    for (var i = 0; i < marker.length; i++) {
-        addMarker(marker[i]);
-    };
-    //add marker function
-    function addMarker(props) {
-        var marker = new google.maps.Marker({
-            position: props.coords,
-            map: map,
-            // icon: props.iconImage
+    // detects user location
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(function (position) {
+
+            // stores user coordinates into a variable
+            var pos = {
+                lat: position.coords.latitude,
+                lng: position.coords.longitude
+            };
+
+            // displays infowindow for user location
+            infoWindow.setPosition(pos);
+            infoWindow.setContent('You are here');
+            infoWindow.open(map);
+            map.setCenter(pos);
+
+            // handles errors when user does not agree to let browser use their location
+        }, function () {
+            handleLocationError(true, infoWindow, map.getCenter());
         });
-        //checks for icon image
-        if (props.iconImage) {
-            //set icon image
-            marker.setIcon(props.iconImage);
-        }
-        // similar check for content...
-        if (props.content) {
-            var infoWindow = new google.maps.InfoWindow({
-                content: props.content
-            });
+    } else {
+        // Browser doesn't support Geolocation
+        handleLocationError(false, infoWindow, map.getCenter());
+    }
 
-            marker.addListener('click', function () {
-                infoWindow.open(map, marker);
-            });
-        };
+    function handleLocationError(browserHasGeolocation, infoWindow, pos) {
+        infoWindow.setPosition(pos);
+        infoWindow.setContent(browserHasGeolocation ?
+            'Error: The Geolocation service failed.' :
+            'Error: Your browser doesn\'t support geolocation.');
+        infoWindow.open(map);
 
     };
-};
 
-function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-    infoWindow.setPosition(pos);
-    infoWindow.setContent(browserHasGeolocation ?
-        'Error: The Geolocation service failed.' :
-        'Error: Your browser doesn\'t support geolocation.');
-    infoWindow.open(map);
-};
-
-var zip = $('#location-input').val
-//latitue & longitude to be replaced by user input
-var latitude = 34.0522342;
-var longitude = -118.2436849;
-//distance to be replaced with user input
-// $('#miles-input').val().trim()
-var distance = 10;
-var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/" + latitude + "/" + longitude + "/" + distance;
-
-$.ajax({
-    url: queryURL,
-    method: "GET"
-}).then(function (response) {
-    console.log(JSON.parse(response));
-    var JSONObject = JSON.parse(response);
+    var geocoder = new google.maps.Geocoder();
 
 
-    //This portion to be merged with the master
+
+    document.getElementById('locate-button').addEventListener('click', function () {
+        geocodeAddress(geocoder, map);
+    });
+
+    // function to search addresses/locations
+    function geocodeAddress(geocoder, resultsMap) {
+
+        var address = document.getElementById('location-input').value;
+        geocoder.geocode({ 'address': address }, function (results, status) {
+            if (status === 'OK') {
+                resultsMap.setCenter(results[0].geometry.location);
+                // commented this out because it placed a marker at search location
+                // var marker = new google.maps.Marker({
+                //     map: resultsMap,
+                //     position: results[0].geometry.location
+                // });
+
+            } else {
+                alert('Geocode was not successful for the following reason: ' + status);
+            }
+
+            console.log(results[0].geometry.location.lat());
+
+            // Query parameters for pulling store locator API
+            var key = "dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9";
+            var latitude = results[0].geometry.location.lat();
+            var longitude = results[0].geometry.location.lng();
+            var distance = document.getElementById('miles-input').value;;
+            var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/" + key + "/get-stores/" + latitude + "/" + longitude + "/" + distance;
+
+            // display markers for nearby store locations
+            function storeMarkers() {
+                $.ajax({
+                    url: queryURL,
+                    method: "GET"
+                }).then(function (response) {
+
+                    console.log(JSON.parse(response));
+                    var JSONObject = JSON.parse(response);
+
     var products = JSONObject.products;
     var retailers = JSONObject.retailers;
     var stores = JSONObject.stores;
 
+                    for (var i = 0; i < JSONObject.stores.length; i++) {
 
-    //loop through Store Locator for Stores
-    for (var i = 0; i < stores.length; i++) {
-        var storeAddress = stores[i].address;
+                        var storesLat = JSONObject.stores[i].lat;
+                        var storesLng = JSONObject.stores[i].lng;
+ var storeAddress = stores[i].address;
         var storeDistance = stores[i].distance;
         var storeRetailer = stores[i].retailer;
         var names = $("<div>").append(
@@ -101,27 +110,21 @@ $.ajax({
             $('<p>').text(Math.floor(storeDistance) + " Miles Away")
         )
         $('#JSON').append(names)
-    }
-    //end of portion to be merged with the master
+                        var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map });
 
-    //Research lodash in order to find the information from Retailer & Products objects
+                    };
 
-    //retailer id from JSONObject is associated with store.retailer#
-    // these loops will most likely be removed
-    //Retailer & Products collections to be called on using lodash
-    for (var i = 0; i < retailers.length; i++) {
-        var retailerName = retailers[i].name;
-        var retailerID = retailers[i].id;
-        console.log(retailerID + " = " + retailerName)
-    }
+                });
+            };
 
-    for (var i = 0; i < products.length; i++) {
-        var productName = products[i].name;
-        var productID = products[i].id;
-        var productTitle = products[i].title;
-        console.log(productID + " " + productName + " " + productTitle)
-    }
+            storeMarkers();
 
-});
+        });
+
+    };
+};
+
+
+   
 
 
