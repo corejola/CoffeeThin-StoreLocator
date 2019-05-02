@@ -8,8 +8,9 @@ function initMap() {
         zoom: 10,
         center: { lat: 34.0522, lng: -118.2437 }
     };
-
+  
     // stores new map object into a variable
+
     map = new google.maps.Map(document.getElementById('map'), options);
 
     infoWindow = new google.maps.InfoWindow;
@@ -39,7 +40,9 @@ function initMap() {
 
             markers.push(marker);
 
+
             // handles errors when user does not agree to let browser detect their location
+
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -55,6 +58,7 @@ function initMap() {
             'Error: The Geolocation service failed.' :
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
+
     };
 
     // Autocomplete function
@@ -86,6 +90,7 @@ function initMap() {
         geocoder.geocode({ 'address': address }, function (results, status) {
             if (status === 'OK') {
                 resultsMap.setCenter(results[0].geometry.location);
+
                 // places a marker at user input location
                 var marker = new google.maps.Marker({
                     map: resultsMap,
@@ -94,6 +99,13 @@ function initMap() {
                 });
 
                 markers.push(marker);
+
+                // commented this out because it placed a marker at search location
+                var marker = new google.maps.Marker({
+                    map: resultsMap,
+                    position: results[0].geometry.location
+                });
+
 
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
@@ -118,15 +130,27 @@ function initMap() {
                     console.log(JSON.parse(response));
                     var JSONObject = JSON.parse(response);
 
+                    // var products = JSONObject.products;
+                    // var retailers = JSONObject.retailers;
+                    var stores = JSONObject.stores;
+
                     for (var i = 0; i < JSONObject.stores.length; i++) {
 
                         var storesLat = JSONObject.stores[i].lat;
                         var storesLng = JSONObject.stores[i].lng;
-                        var storesName = JSONObject.retailers[i].name;
-                        var storesAddress = JSONObject.retailers[i].name;
-                        var storesCity = JSONObject.retailers[i].name;
-                        var storesZip = JSONObject.retailers[i].name;
-                        var storesProducts = JSONObject.retailers[i].name;
+
+                        var storeCity = stores[i].city;
+                        var storeAddress = stores[i].address;
+                        var storeDistance = stores[i].distance;
+                        var storeRetailer = stores[i].retailer;
+                        //add the store information into the HTML id JSON
+                        var names = $("<div>").append(
+                            $('<p>').text(storeRetailer),
+                            $('<p>').text(storeAddress),
+                            $('<p>').text(storeCity + ", "),
+                            $('<p>').text(Math.floor(storeDistance) + " Miles Away")
+                        )
+                        $('#JSON').append(names);
 
                         var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map });
 
@@ -144,9 +168,7 @@ function initMap() {
 
                 });
             };
-
             storeMarkers();
-
         });
 
     };
@@ -158,4 +180,5 @@ function initMap() {
         }
     };
 };
+
 
