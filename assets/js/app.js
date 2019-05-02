@@ -1,4 +1,6 @@
+//global variables
 var map;
+//clear the markers to search an address
 var markers = [];
 var infoWindow;
 
@@ -15,6 +17,7 @@ function initMap() {
 
     infoWindow = new google.maps.InfoWindow;
 
+    //detect user location and to add the user location marker when the page loads
     // detects user location
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
@@ -38,15 +41,18 @@ function initMap() {
                 icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
             });
 
+    //pushing the above marker into the array
             markers.push(marker);
 
 
             // handles errors when user does not agree to let browser detect their location
-
+//center is hardcoded into the code
+            //if the user says do not allow
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
     } else {
+        
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
     };
@@ -68,9 +74,6 @@ function initMap() {
 
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
-        document.getElementById('location-snap').innerHTML = place.formatted_address;
-        document.getElementById('lat-span').innerHTML = place.geometry.location.lat();
-        document.getElementById('lon-span').innerHTML = place.geometry.location.lng();
     });
 
     // stores new Geocoder object into a variable
@@ -79,6 +82,7 @@ function initMap() {
     document.getElementById('locate-button').addEventListener('click', function () {
         // removes markers after submitting new search
         removeMarkers();
+        //defined all the way at the bottom
         geocodeAddress(geocoder, map);
     });
 
@@ -95,19 +99,14 @@ function initMap() {
                 var marker = new google.maps.Marker({
                     map: resultsMap,
                     position: results[0].geometry.location,
+                    //customized icon 
                     icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
                 });
 
                 markers.push(marker);
 
-                // commented this out because it placed a marker at search location
-                var marker = new google.maps.Marker({
-                    map: resultsMap,
-                    position: results[0].geometry.location
-                });
-
-
             } else {
+                //instead of the alert, send this to the DOM
                 alert('Geocode was not successful for the following reason: ' + status);
             };
 
@@ -115,9 +114,9 @@ function initMap() {
 
             // Query parameters for pulling store locator API
             var key = "dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9";
-            var latitude = results[0].geometry.location.lat();
+            var latitude = results[0].geometry.location.lat(); //this is a method within the object
             var longitude = results[0].geometry.location.lng();
-            var distance = document.getElementById('miles-input').value;;
+            var distance = document.getElementById('miles-input').value;
             var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/" + key + "/get-stores/" + latitude + "/" + longitude + "/" + distance;
 
             // display markers for nearby store locations relative to searched location
@@ -128,6 +127,7 @@ function initMap() {
                 }).then(function (response) {
 
                     console.log(JSON.parse(response));
+                    //store locator api is returned as a string
                     var JSONObject = JSON.parse(response);
 
                     // var products = JSONObject.products;
@@ -143,6 +143,7 @@ function initMap() {
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
+                        
                         //add the store information into the HTML id JSON
                         var names = $("<div>").append(
                             $('<p>').text(storeRetailer),
