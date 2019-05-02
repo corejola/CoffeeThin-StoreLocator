@@ -1,8 +1,8 @@
 
+
 var map;
 var markers = [];
 var infoWindow;
-
 
 function initMap() {
     var options = {
@@ -45,9 +45,11 @@ function initMap() {
             'Error: The Geolocation service failed.' :
             'Error: Your browser doesn\'t support geolocation.');
         infoWindow.open(map);
+
     };
 
     var geocoder = new google.maps.Geocoder();
+
 
 
     document.getElementById('locate-button').addEventListener('click', function () {
@@ -90,11 +92,24 @@ function initMap() {
                     console.log(JSON.parse(response));
                     var JSONObject = JSON.parse(response);
 
+    var products = JSONObject.products;
+    var retailers = JSONObject.retailers;
+    var stores = JSONObject.stores;
+
                     for (var i = 0; i < JSONObject.stores.length; i++) {
 
                         var storesLat = JSONObject.stores[i].lat;
                         var storesLng = JSONObject.stores[i].lng;
-
+ var storeAddress = stores[i].address;
+        var storeDistance = stores[i].distance;
+        var storeRetailer = stores[i].retailer;
+        var names = $("<div>").append(
+            $('<p>').text(storeRetailer),
+            $('<p>').text(storeAddress),
+            $('<p>').text(storeCity + ", "),
+            $('<p>').text(Math.floor(storeDistance) + " Miles Away")
+        )
+        $('#JSON').append(names)
                         var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map });
 
                     };
@@ -109,5 +124,7 @@ function initMap() {
     };
 };
 
+
    
+
 

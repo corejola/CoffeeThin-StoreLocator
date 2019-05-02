@@ -16,7 +16,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
-
+    <script> src = "https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.core.js"</script>
 </head>
 
 <body>
@@ -112,7 +112,11 @@
             </div>
             <!--ends column one: map-holder-->
             <div class="col m4">
-                <div id="JSON"></div>
+                <div id="JSON" class="vertical-menu">
+                    <ul>
+
+                    </ul>
+                </div>
             </div>
         </div>
         <!--end column two: locator-holder-->
@@ -123,11 +127,19 @@
     </div>
     <!-- ends container three -->
 
-    <script src="assets/js/app.js">
-    </script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&callback=initMap">
+
+    <div class="container">
+        <div class="footer-copyright">
+            © 2019 Copyright Text
+            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
+        </div>
+        </footer>
+
+        <script src="assets/js/app.js">
         </script>
+        <!-- <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&callback=initMap">
+            </script> -->
 </body>
 
 </html>
