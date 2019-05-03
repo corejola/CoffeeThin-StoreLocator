@@ -136,13 +136,6 @@ function initMap() {
                         var storeRetailer = stores[i].retailer;
                         var storeProducts = stores[i].products;
 
-                        // content for infowindow
-                        var contentString = '<span>' + retailerName + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productName + '</span>';
-
-                        var storeInfowindow = new google.maps.InfoWindow({
-                            content: contentString
-                        });
-
                         var retailerName = "";
                         var productName = "";
 
@@ -186,6 +179,13 @@ function initMap() {
                         );
                         $('#JSON').append(names);
 
+                        // content for infowindow
+                        var contentString = '<span>' + retailerName + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productName + '</span>';
+
+                        var storeInfowindow = new google.maps.InfoWindow({
+                            content: contentString
+                        });
+
                         var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map, info: contentString });
 
                         markers.push(marker);
@@ -202,6 +202,10 @@ function initMap() {
                 });
             };
             storeMarkers();
+
+            // clears input text boxes after search is submitted
+            $("#location-input").val("");
+            $("#miles-input").val("");
         });
 
     };
