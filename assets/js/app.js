@@ -49,29 +49,16 @@ function initMap() {
         }).then(function (response) {
             console.log(JSON.parse(response));
             var JSONObject = JSON.parse(response);
-            // _.find((JSONObject), function (item) {
-            //     return item.id === 1;
-            // });
-            // for (var i = 0; i < JSONObject.retailers.length; i++) {
-            //     var retailerName = JSONObject.retailers[i].name;
-            //     var retailerID = JSONObject.retailers[i].id;
-
-            // };
-            // for (var i = 0; i < JSONObject.products.length; i++) {
-            //     var productName = JSONObject.products[i].name;
-            //     var productID = JSONObject.products[i].id;
-            //     var productTitle = JSONObject.products[i].title;
-
-            // };
+            
     // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
             for (var i = 0; i < JSONObject.stores.length; i++) {
-                for (var j = 0; j < JSONObject.retailers.length; j++) {
                         var storesLat = JSONObject.stores[i].lat;
                         var storesLng = JSONObject.stores[i].lng;
                         var storeAddress = JSONObject.stores[i].address;
                         var storeCity = JSONObject.stores[i].city;
                         var storeID = JSONObject.stores[i].id;
                         var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
+            // || to ensure code doesn't break, set []
                         var storeRetailer = JSONObject.stores[i].retailer;
                         var storeState = JSONObject.stores[i].state;
                         var storeZip = JSONObject.stores[i].zip;
@@ -81,7 +68,6 @@ function initMap() {
                         );
 
                         var productHTML = productDetails.reduce((result, p) => result + p.title + '<br>', '');
-                }
  // LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS, INFOWINDOW FOR MARKERS THAT SHOW FOR STORE LOCATIONS (MISSING STORE NAME & STORE PRODUCTS)
  let marker = new google.maps.Marker(
     {
