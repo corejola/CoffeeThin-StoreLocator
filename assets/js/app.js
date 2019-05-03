@@ -8,7 +8,7 @@ function initMap() {
         zoom: 10,
         center: { lat: 34.0522, lng: -118.2437 }
     };
-  
+
     // stores new map object into a variable
 
     map = new google.maps.Map(document.getElementById('map'), options);
@@ -79,6 +79,7 @@ function initMap() {
     document.getElementById('locate-button').addEventListener('click', function () {
         // removes markers after submitting new search
         removeMarkers();
+        clearList();
         geocodeAddress(geocoder, map);
     });
 
@@ -143,10 +144,10 @@ function initMap() {
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
-                        //add the store information into the HTML id JSON
-                        var names = $("<div>").append(
-                            $('<p>').text(storeRetailer),
-                            $('<p>').text(storeAddress),
+//add the store information into the HTML id JSON
+                                            var  names = $("<div>").append(
+                    $('<p>').text(storeRetailer),
+                                        $('<p>').text(storeAddress),
                             $('<p>').text(storeCity + ", "),
                             $('<p>').text(Math.floor(storeDistance) + " Miles Away")
                         )
@@ -179,6 +180,9 @@ function initMap() {
             markers[i].setMap(null);
         }
     };
+    function clearList() {
+        $('#JSON').html("")
+    }
 };
 
 
