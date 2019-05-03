@@ -40,9 +40,6 @@ function initMap() {
     var latitude = 34.0522342;
     var longitude = -118.2436849;
     var distance = 25;
-    var retailerStoreName = [];
-    var retailerStoreID = [];
-    var coffeeProduct = [];
     var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9/get-stores/" + latitude + "/" + longitude + "/" + distance;
 
     function storeMarkers() {
@@ -55,93 +52,77 @@ function initMap() {
             // _.find((JSONObject), function (item) {
             //     return item.id === 1;
             // });
-            for (var i = 0; i < JSONObject.retailers.length; i++) {
-                var retailerName = JSONObject.retailers[i].name;
-                var retailerID = JSONObject.retailers[i].id;
-                // retailerStoreName.push(retailerName);
-                // console.log(retailerStoreName);
-                // retailerStoreID.push(retailerID);
-            };
-            for (var i = 0; i < JSONObject.products.length; i++) {
-                var productName = JSONObject.products[i].name;
-                var productID = JSONObject.products[i].id;
-                var productTitle = JSONObject.products[i].title;
-                // coffeeProduct.push(productID)
-            };
+            // for (var i = 0; i < JSONObject.retailers.length; i++) {
+            //     var retailerName = JSONObject.retailers[i].name;
+            //     var retailerID = JSONObject.retailers[i].id;
+
+            // };
+            // for (var i = 0; i < JSONObject.products.length; i++) {
+            //     var productName = JSONObject.products[i].name;
+            //     var productID = JSONObject.products[i].id;
+            //     var productTitle = JSONObject.products[i].title;
+
+            // };
+    // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
             for (var i = 0; i < JSONObject.stores.length; i++) {
-                // NESTED FOR LOOP TO COMPARE DATA
-                // for (var j = 0); j ,
-                var storesLat = JSONObject.stores[i].lat;
-                var storesLng = JSONObject.stores[i].lng;
-                var storeAddress = JSONObject.stores[i].address;
-                var storeCity = JSONObject.stores[i].city;
-                var storeID = JSONObject.stores[i].id;
-                var storeProducts = JSONObject.stores[i].products;
-                var storeRetailer = JSONObject.stores[i].retailer;
-                var storeState = JSONObject.stores[i].state;
-                var storeZip = JSONObject.stores[i].zip;
-                // var storeCountry = JSONObject.stores[i].country;
-                // var storeDistance = JSONObject.stores[i].distance;
+                for (var j = 0; j < JSONObject.retailers.length; j++) {
+                        var storesLat = JSONObject.stores[i].lat;
+                        var storesLng = JSONObject.stores[i].lng;
+                        var storeAddress = JSONObject.stores[i].address;
+                        var storeCity = JSONObject.stores[i].city;
+                        var storeID = JSONObject.stores[i].id;
+                        var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
+                        var storeRetailer = JSONObject.stores[i].retailer;
+                        var storeState = JSONObject.stores[i].state;
+                        var storeZip = JSONObject.stores[i].zip;
+                        var storeName = JSONObject.retailers.find(retailer => storeRetailer === retailer.id).name;
+                        var productDetails = storeProductIDs.map(productId => 
+                            JSONObject.products.find(product => productId === product.id)
+                        );
 
-                // for (var i = 0; i < JSONObject.stores.length; i++) {
-                    //  var storeAddress = JSONObject.stores[i].address;
-                    //  var storeCity = JSONObject.stores[i].city;
-                        
-                // for (var i = 0; i < JSONObject.retailers.length; i++) {
-                    //  var retailerName = JSONObject.retailers[i].name;
-                    //  var retailerID = JSONObject.retailers[i].id;
-                    //  console.log(retailerName);
-                    //  console.log(retailerID);
-                    // }
-
-                // if (storeProducts === "[2,1]" || storeProducts === "[1,2]" ) {
-                //     var products = JSONObject.products[0].title, JSONObject.products[1].title
-                //  else if (storeProducts === "[2]") {
-                //     var products = "Caramel";
-                // // }
-                // // else {
-                //     var products = "Original Blend";
-                // }
-               
-                // console.log(retailerID);
-                // STORE CHECK: CVS: 6588 Foothill BlvdTujunga, CA 91042
-                if (storeRetailer === retailerStoreID) {
-                    var storeName = retailerStoreName
+                        var productHTML = productDetails.reduce((result, p) => result + p.title + '<br>', '');
                 }
-                // console.log(retailerID);
-// LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS, INFOWINDOW FOR MARKERS THAT SHOW FOR STORE LOCATIONS (MISSING STORE NAME & STORE PRODUCTS)
-                let marker = new google.maps.Marker(
-                    { 
-                        position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, 
-                        map: map,
-                        // icon: ,
-                        animation: google.maps.Animation.BOUNCE
-                    });
-                marker.info = new google.maps.InfoWindow({
-                    content: '<span>' + storeName + '<br>'+ storeAddress + '<br>' + storeCity + '<br>' + storeZip + '<br>' + storeProducts + '</span>' 
-                });
-                
-                marker.addListener('click', function(){
-                    console.log("marker was pressed");
-                    marker.info.open(map, marker)  
-                
-                // marker.addListener ('click, toggleBounce');
-                });
-            };
+ // LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS, INFOWINDOW FOR MARKERS THAT SHOW FOR STORE LOCATIONS (MISSING STORE NAME & STORE PRODUCTS)
+ let marker = new google.maps.Marker(
+    {
+        position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
+        map: map,
+        // icon: ,
+        animation: google.maps.Animation.BOUNCE
+    });
+
+
+
+
+marker.info = new google.maps.InfoWindow({
+    content: '<span>' + storeName + '<br>' + storeAddress + '<br>' + storeCity + '<br>' + storeZip + '<br>' + productHTML + '</span>'
+});
+
+marker.addListener('click', function () {
+    console.log("marker was pressed");
+    marker.info.open(map, marker)
+
+    // marker.addListener ('click, toggleBounce');
+});
+            }
+
+
+           
         });
+        // closes out function (response)
     };
     storeMarkers();
 };
 // LORRIE: (END) OF CODE SNIPPET FOR BOUNCING ON MARKERS, INFOWINDOW FOR MARKERS THAT SHOW FOR STORE LOCATIONS (MISSING STORE NAME & STORE PRODUCTS)  
 
 function handleLocationError(browserHasGeolocation, infoWindow, pos) {
-        infoWindow.setPosition(pos);
-        infoWindow.setContent(browserHasGeolocation ?
-            'Error: The Geolocation service failed.' :
-            'Error: Your browser doesn\'t support geolocation.');
-        infoWindow.open(map);
+    infoWindow.setPosition(pos);
+    infoWindow.setContent(browserHasGeolocation ?
+        'Error: The Geolocation service failed.' :
+        'Error: Your browser doesn\'t support geolocation.');
+    infoWindow.open(map);
 };
-    
+
 //     //    console.log(typeof response);
 //     console.log(JSON.parse(response));
 //     var JSONObject = JSON.parse(response);
@@ -151,32 +132,8 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
 //     console.log(products);
 
 //     
-//     for (var i = 0; i < JSONObject.products.length; i++) {
-//         var productName = JSONObject.products[i].name;
-//         var productID = JSONObject.products[i].id;
-//         var productTitle = JSONObject.products[i].title;
-        // var iconImage = JSONObject.products[i].imageurl;
-//         console.log(productName);
-//         console.log(productID);
-//         console.log(productTitle);
-//     }
 
-//     
 
-//    
-//         console.log(storeAddress);
-//         console.log(storeCity);
-//         console.log(storeCountry);
-//         console.log(storeDistance);
-//         console.log(storeID);
-//         console.log(storeLatitude);
-//         console.log(storeLongitude);
-//         console.log(storeProducts);
-//         console.log(storeRetailer);
-//         console.log(storeState);
-//         console.log(storeZip);
-//     }
 
-// });
 
 
