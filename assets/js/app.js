@@ -134,14 +134,12 @@ function initMap() {
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
+                        //using lodash to display the retailer
+                        var retailerName = _.find(JSONObject.retailers, { id: storeRetailer });
+                        console.log("Retailer name(s)" + retailerName)
                         var storeProducts = stores[i].products;
 
-                        var retailerName = "";
                         var productName = "";
-
-                        //using lodash to display the retailer
-
-
 
                         // placeholder/workaround for showing product name until we figure out lodash
                         if (storeProducts === "[1]") {
@@ -156,7 +154,7 @@ function initMap() {
 
                         //add the store information into the HTML id JSON
                         var names = $("<div>").append(
-                            $('<p>').text(retailerName),
+                            $('<p>').text(retailerName.name),
                             $('<p>').text(storeAddress),
                             $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
                             $('<p>').text("Products: " + productName),
