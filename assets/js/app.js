@@ -34,14 +34,14 @@ function initMap() {
             map.setCenter(pos);
 
             // places marker at user location when their location is detected
-            var markerLocation = new google.maps.Marker({
+            var markerLocation_id = new google.maps.Marker({
                 position: pos,
                 map: map,
                 icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
             });
 
             //pushing markers to the user location array, not the store location array
-            markerLocation.push(markerLocation);
+            markerLocation.push(markerLocation_id);
 
 
             // handles errors when user does not agree to let browser detect their location
@@ -71,9 +71,9 @@ function initMap() {
 
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
-        document.getElementById('location-snap').innerHTML = place.formatted_address;
-        document.getElementById('lat-span').innerHTML = place.geometry.location.lat();
-        document.getElementById('lon-span').innerHTML = place.geometry.location.lng();
+        // document.getElementById('location-snap').innerHTML = place.formatted_address;
+        // document.getElementById('lat-span').innerHTML = place.geometry.location.lat();
+        // document.getElementById('lon-span').innerHTML = place.geometry.location.lng();
     });
 
     // stores new Geocoder object into a variable
@@ -95,14 +95,14 @@ function initMap() {
                 resultsMap.setCenter(results[0].geometry.location);
 
                 // places a marker at user input location
-                var markerLocation = new google.maps.Marker({
+                var markerLocation_self = new google.maps.Marker({
                     map: resultsMap,
                     position: results[0].geometry.location,
                     icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
                 });
                 //clears out location markers for new user input
                 removeLocationMarkers();
-                markerLocation.push(markerLocation);
+                markerLocation.push(markerLocation_self);
 
                 // commented this out because it placed a marker at search location
                 // var marker = new google.maps.Marker({
@@ -134,6 +134,7 @@ function initMap() {
                     console.log(JSON.parse(response));
                     var JSONObject = JSON.parse(response);
 
+
                     // var products = JSONObject.products;
                     // var retailers = JSONObject.retailers;
                     var stores = JSONObject.stores;
@@ -147,9 +148,12 @@ function initMap() {
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
+                        var retailerName = _.find(JSONObject.retailers, { id: storeRetailer });
+                        console.log(retailerName);
+
                         //add the store information into the HTML id JSON
                         var names = $("<div>").append(
-                            $('<p>').text(storeRetailer),
+                            $('<p>').text(retailerName.name),
                             $('<p>').text(storeAddress),
                             $('<p>').text(storeCity + ", "),
                             $('<p>').text(Math.floor(storeDistance) + " Miles Away")
