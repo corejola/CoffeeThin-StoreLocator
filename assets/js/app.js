@@ -69,6 +69,17 @@ function initMap() {
                                                     });
                                     })
                                     .reduce(function(result, p) { return result + p.title + '<br>';}, '');
+                                    
+                         
+                                
+
+                    // var storeProductIDs = [1, 2, 3, 4, 5];
+                    // var productId = 3;
+                    // for (let i = 0; i < storeProductIDs.length; i++) {
+                    //     if(storeProductIDs[i]=== productId) {
+                    //         return product.id
+                    //     }
+                    // }
 
 
                 // LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS
