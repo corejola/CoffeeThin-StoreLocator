@@ -61,8 +61,8 @@ function initMap() {
     // user location detection function end
 
 
-// Autocomplete function begin
-var input = document.getElementById('location-input');
+    // Autocomplete function begin
+    var input = document.getElementById('location-input');
 
 
     var autocomplete = new google.maps.places.Autocomplete(input);
@@ -135,7 +135,7 @@ var input = document.getElementById('location-input');
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
                         var retailerName = "";
-        
+
                         // placeholder/workaround for showing retailer name until we figure out lodash
                         if (storeRetailer === 4) {
                             retailerName = retailers[0].name;
@@ -155,23 +155,23 @@ var input = document.getElementById('location-input');
                             retailerName = retailers[7].name
                         };
 
-                   // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
+                        // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
 
                         var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
                         // || to ensure code doesn't break, set [];
                         var storeRetailer = JSONObject.stores[i].retailer;
                         // turn string array to JS array, get product details, then create HTML string for info window
                         var productHTML = storeProductIDs
-                                    .map(function(productId) {
-                                        return JSONObject.products
-                                                    .find(function(product) {
-                                                        return productId === product.id
-                                                    });
-                                    })
-                                    .reduce(function(result, p) { return result + p.title + '<br>';}, '');
+                            .map(function (productId) {
+                                return JSONObject.products
+                                    .find(function (product) {
+                                        return productId === product.id
+                                    });
+                            })
+                            .reduce(function (result, p) { return result + p.title + '<br>'; }, '');
 
                         //add the store information into the HTML id JSON
-                        var names = $("<div>").append(
+                        var names = $("<li>").append(
                             $('<p>').text(retailerName),
                             $('<p>').text(storeAddress),
                             $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
