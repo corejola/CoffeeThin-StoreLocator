@@ -3,6 +3,7 @@ var map;
 var storeMarkers = [];
 var infoWindow;
 var locationSelect;
+var currentLocation = { lat: 34.0522, lng: -118.2437 }; //default location
 
 function initMap() {
     var options = {
@@ -23,6 +24,8 @@ function initMap() {
                 lat: position.coords.latitude,
                 lng: position.coords.longitude
             };
+
+            currentLocation = pos;
 
             infoWindow.setPosition(pos);
             infoWindow.setContent('Location found.');
@@ -49,58 +52,58 @@ function initMap() {
         }).then(function (response) {
             console.log(JSON.parse(response));
             var JSONObject = JSON.parse(response);
-            
-// LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
+
+            // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
             for (var i = 0; i < JSONObject.stores.length; i++) {
-                        var storesLat = JSONObject.stores[i].lat;
-                        var storesLng = JSONObject.stores[i].lng;
-                        var storeAddress = JSONObject.stores[i].address;
-                        var storeCity = JSONObject.stores[i].city;
-                        var storeID = JSONObject.stores[i].id;
-                        var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
-// || to ensure code doesn't break, set [];
-                        var storeRetailer = JSONObject.stores[i].retailer;
-                        var storeState = JSONObject.stores[i].state;
-                        var storeZip = JSONObject.stores[i].zip;
-                        var storeName = JSONObject.retailers.find(retailer => storeRetailer === retailer.id).name;
-                        var productDetails = storeProductIDs.map(productId => 
-                            JSONObject.products.find(product => productId === product.id)
-                        );
-
-                        var productHTML = productDetails.reduce((result, p) => result + p.title + '<br>', '');
- 
- // LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS
- let marker = new google.maps.Marker(
-    {
-        position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
-        map: map,
-        // icon: ,
-        animation: google.maps.Animation.BOUNCE
-    });
-// LORRIE: (END) OF CODE SNIPPET FOR BOUNCING ON MARKERS
+                var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
+                // || to ensure code doesn't break, set [];
+                var storeRetailer = JSONObject.stores[i].retailer;
+                var storeName = JSONObject.retailers.find(function(retailer) { return storeRetailer === retailer.id}).name;
+                // turn string array to JS array, get product details, then create HTML string for info window
+                // did in one variable to avoid creating unnecessary var's
+                var productHTML = storeProductIDs
+                                    .map(function(productId) {
+                                        return JSONObject.products
+                                                    .find(function(product) {
+                                                        return productId === product.id
+                                                    });
+                                    })
+                                    .reduce(function(result, p) { return result + p.title + '<br>';}, '');
 
 
+                // LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS
+                let marker = new google.maps.Marker(
+                    {
+                        position: { lat: parseFloat(JSONObject.stores[i].lat), lng: parseFloat(JSONObject.stores[i].lng) },
+                        map: map,
+                        // icon: ,
+                        animation: google.maps.Animation.BOUNCE
+                    });
+                // LORRIE: (END) OF CODE SNIPPET FOR BOUNCING ON MARKERS
 
-marker.info = new google.maps.InfoWindow({
-    content: '<span>' + storeName + '<br>' + storeAddress + '<br>' + storeCity + '<br>' + storeZip + '<br>' + productHTML + '</span>'
-});
 
-marker.addListener('click', function () {
-    console.log("marker was pressed");
-    marker.info.open(map, marker)
 
-// LORRIE: END OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
-    
-// marker.addListener ('click, toggleBounce');
-});
+                marker.info = new google.maps.InfoWindow({
+                    content: '<span>' + storeName + '<br>' + JSONObject.stores[i].address + '<br>' + JSONObject.stores[i].city + ', ' + JSONObject.stores[i].state + '<br>' + JSONObject.stores[i].zip + '<br>' + productHTML + '</span>'
+                });
+
+                marker.addListener('click', function () {
+                    console.log("marker was pressed");
+                    marker.info.open(map, marker)
+
+                    // LORRIE: END OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
+
+                    // marker.addListener ('click, toggleBounce');
+                });
             }
-
-
-           
         });
         // closes out function (response)
     };
     storeMarkers();
+
+    function goBackToCenter(location) {
+        map.setCenter(location);
+    }
 };
 // LORRIE: (END) OF CODE SNIPPET FOR BOUNCING ON MARKERS, INFOWINDOW FOR MARKERS THAT SHOW FOR STORE LOCATIONS (MISSING STORE NAME & STORE PRODUCTS)  
 
@@ -112,15 +115,7 @@ function handleLocationError(browserHasGeolocation, infoWindow, pos) {
     infoWindow.open(map);
 };
 
-//     //    console.log(typeof response);
-//     console.log(JSON.parse(response));
-//     var JSONObject = JSON.parse(response);
-//     var products = JSONObject.products;
-//     var retailers = JSONObject.retailers;
-//     var stores = JSONObject.stores;
-//     console.log(products);
 
-//     
 
 
 
