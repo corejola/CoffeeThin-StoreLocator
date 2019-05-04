@@ -121,7 +121,6 @@ function initMap() {
                 }).then(function (response) {
 
                     var JSONObject = JSON.parse(response);
-                    var retailers = JSONObject.retailers;
                     var stores = JSONObject.stores;
 
                     for (var i = 0; i < stores.length; i++) {
@@ -134,28 +133,10 @@ function initMap() {
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
-                        var retailerName = "";
+                        //begin lodash
+                        var retailerName = _.find(JSONObject.retailers, { id: storeRetailer });
+                        var retailDisplay = retailerName.name;
 
-                        // placeholder/workaround for showing retailer name until we figure out lodash
-                        if (storeRetailer === 4) {
-                            retailerName = retailers[0].name;
-                        } else if (storeRetailer === 5) {
-                            retailerName = retailers[1].name
-                        } else if (storeRetailer === 6) {
-                            retailerName = retailers[2].name
-                        } else if (storeRetailer === 7) {
-                            retailerName = retailers[3].name
-                        } else if (storeRetailer === 8) {
-                            retailerName = retailers[4].name
-                        } else if (storeRetailer === 9) {
-                            retailerName = retailers[5].name
-                        } else if (storeRetailer === 10) {
-                            retailerName = retailers[6].name
-                        } else if (storeRetailer === 11) {
-                            retailerName = retailers[7].name
-                        };
-
-                        // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
 
                         var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
                         // || to ensure code doesn't break, set [];
@@ -172,7 +153,7 @@ function initMap() {
 
                         //add the store information into the HTML id JSON
                         var names = $("<li>").append(
-                            $('<p>').text(retailerName),
+                            $('<p>').text(retailDisplay),
                             $('<p>').text(storeAddress),
                             $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
                             $('<p>').html("Products: " + productHTML),
@@ -181,7 +162,7 @@ function initMap() {
                         $('#JSON').append(names);
 
                         // content for infowindow
-                        var contentString = '<span>' + retailerName + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '</span>';
+                        var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '</span>';
 
                         var storeInfowindow = new google.maps.InfoWindow({
                             content: contentString
