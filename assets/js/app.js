@@ -46,6 +46,7 @@ function initMap() {
     } else {
         // Browser doesn't support Geolocation
         handleLocationError(false, infoWindow, map.getCenter());
+
     };
 
     // notification geolocation service fails
@@ -59,8 +60,10 @@ function initMap() {
     };
     // user location detection function end
 
-    // Autocomplete function begin
-    var input = document.getElementById('location-input');
+
+// Autocomplete function begin
+var input = document.getElementById('location-input');
+
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
@@ -118,8 +121,6 @@ function initMap() {
                 }).then(function (response) {
 
                     var JSONObject = JSON.parse(response);
-
-                    var products = JSONObject.products;
                     var retailers = JSONObject.retailers;
                     var stores = JSONObject.stores;
 
@@ -133,11 +134,8 @@ function initMap() {
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
-                        var storeProducts = stores[i].products;
-
                         var retailerName = "";
-                        var productName = "";
-
+        
                         // placeholder/workaround for showing retailer name until we figure out lodash
                         if (storeRetailer === 4) {
                             retailerName = retailers[0].name;
@@ -157,29 +155,33 @@ function initMap() {
                             retailerName = retailers[7].name
                         };
 
-                        // placeholder/workaround for showing product name until we figure out lodash
-                        if (storeProducts === "[1]") {
-                            productName = products[0].title;
-                        } else if (storeProducts === "[2]") {
-                            productName = products[1].title
-                        } else if (storeProducts === "[2,1]") {
-                            productName = products[0].title + " & " + products[1].title
-                        } else if (storeProducts === "[1,2]") {
-                            productName = products[0].title + " & " + products[1].title
-                        };
+                   // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
+
+                        var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
+                        // || to ensure code doesn't break, set [];
+                        var storeRetailer = JSONObject.stores[i].retailer;
+                        // turn string array to JS array, get product details, then create HTML string for info window
+                        var productHTML = storeProductIDs
+                                    .map(function(productId) {
+                                        return JSONObject.products
+                                                    .find(function(product) {
+                                                        return productId === product.id
+                                                    });
+                                    })
+                                    .reduce(function(result, p) { return result + p.title + '<br>';}, '');
 
                         //add the store information into the HTML id JSON
                         var names = $("<div>").append(
                             $('<p>').text(retailerName),
                             $('<p>').text(storeAddress),
                             $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
-                            $('<p>').text("Products: " + productName),
+                            $('<p>').html("Products: " + productHTML),
                             $('<p>').text(Math.floor(storeDistance) + " Miles Away")
                         );
                         $('#JSON').append(names);
 
                         // content for infowindow
-                        var contentString = '<span>' + retailerName + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productName + '</span>';
+                        var contentString = '<span>' + retailerName + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '</span>';
 
                         var storeInfowindow = new google.maps.InfoWindow({
                             content: contentString
@@ -189,7 +191,7 @@ function initMap() {
 
                         markers.push(marker);
 
-                        // click event listener for marker infowindow. Maybe do hover instead of click
+                        // click event listener for marker infowindow. 
                         marker.addListener('click', function () {
                             storeInfowindow.setContent(this.info);
                             storeInfowindow.open(map, this);
