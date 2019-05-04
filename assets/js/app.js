@@ -164,9 +164,7 @@ var input = document.getElementById('location-input');
                         var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
                         // || to ensure code doesn't break, set [];
                         var storeRetailer = JSONObject.stores[i].retailer;
-                        var storeName = JSONObject.retailers.find(function(retailer) { return storeRetailer === retailer.id}).name;
                         // turn string array to JS array, get product details, then create HTML string for info window
-                        // did in one variable to avoid creating unnecessary var's
                         var productHTML = storeProductIDs
                                     .map(function(productId) {
                                         return JSONObject.products
