@@ -76,8 +76,7 @@ function initMap() {
         event.preventDefault();
         // removes markers after submitting new search
         removeMarkers();
-        // clears location details listing after submitting new search. Needs to be merged with master
-        document.getElementById('JSON').innerHTML = '';
+        clearList();
         geocodeAddress(geocoder, map);
     });
     // autocomplete function end
@@ -217,6 +216,9 @@ function initMap() {
             markers[i].setMap(null);
         }
     };
+    function clearList() {
+        $('#JSON').html("")
+    }
 };
 
 
