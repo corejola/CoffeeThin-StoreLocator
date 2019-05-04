@@ -8,14 +8,13 @@ function initMap() {
         zoom: 10,
         center: { lat: 34.0522, lng: -118.2437 }
     };
-  
-    // stores new map object into a variable
 
+    // stores new map object into a variable
     map = new google.maps.Map(document.getElementById('map'), options);
 
     infoWindow = new google.maps.InfoWindow;
 
-    // detects user location
+    // user location detection function begin
     if (navigator.geolocation) {
         navigator.geolocation.getCurrentPosition(function (position) {
 
@@ -40,9 +39,7 @@ function initMap() {
 
             markers.push(marker);
 
-
             // handles errors when user does not agree to let browser detect their location
-
         }, function () {
             handleLocationError(true, infoWindow, map.getCenter());
         });
@@ -60,29 +57,32 @@ function initMap() {
         infoWindow.open(map);
 
     };
+    // user location detection function end
 
-    // Autocomplete function
+    // Autocomplete function begin
     var input = document.getElementById('location-input');
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
-        document.getElementById('location-snap').innerHTML = place.formatted_address;
-        document.getElementById('lat-span').innerHTML = place.geometry.location.lat();
-        document.getElementById('lon-span').innerHTML = place.geometry.location.lng();
     });
 
     // stores new Geocoder object into a variable
     var geocoder = new google.maps.Geocoder();
 
-    document.getElementById('locate-button').addEventListener('click', function () {
+    document.getElementById('locate-button').addEventListener('click', function (event) {
+        // Needs to be merged with master
+        event.preventDefault();
         // removes markers after submitting new search
         removeMarkers();
+        // clears location details listing after submitting new search. Needs to be merged with master
+        document.getElementById('JSON').innerHTML = '';
         geocodeAddress(geocoder, map);
     });
+    // autocomplete function end
 
-    // function to search addresses/locations
+    // search addresses/locations function begin
     function geocodeAddress(geocoder, resultsMap) {
 
         var address = document.getElementById('location-input').value;
@@ -91,7 +91,7 @@ function initMap() {
             if (status === 'OK') {
                 resultsMap.setCenter(results[0].geometry.location);
 
-                // places a marker at user input location
+                // places a custom marker at user input location
                 var marker = new google.maps.Marker({
                     map: resultsMap,
                     position: results[0].geometry.location,
@@ -100,78 +100,116 @@ function initMap() {
 
                 markers.push(marker);
 
-                // commented this out because it placed a marker at search location
-                var marker = new google.maps.Marker({
-                    map: resultsMap,
-                    position: results[0].geometry.location
-                });
-
-
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
             };
-
-            console.log(results[0].geometry.location.lat());
 
             // Query parameters for pulling store locator API
             var key = "dmhfc3RvcmVsb2NhdG9yLXYxeyJjaWQiOjJ9";
             var latitude = results[0].geometry.location.lat();
             var longitude = results[0].geometry.location.lng();
-            var distance = document.getElementById('miles-input').value;;
+            var distance = document.getElementById('miles-input').value;
             var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/" + key + "/get-stores/" + latitude + "/" + longitude + "/" + distance;
 
-            // display markers for nearby store locations relative to searched location
+            // display markers function for nearby store locations relative to searched location. Begin storeMarker function
             function storeMarkers() {
                 $.ajax({
                     url: queryURL,
                     method: "GET"
                 }).then(function (response) {
 
-                    console.log(JSON.parse(response));
                     var JSONObject = JSON.parse(response);
 
-                    // var products = JSONObject.products;
-                    // var retailers = JSONObject.retailers;
+                    var products = JSONObject.products;
+                    var retailers = JSONObject.retailers;
                     var stores = JSONObject.stores;
 
-                    for (var i = 0; i < JSONObject.stores.length; i++) {
+                    for (var i = 0; i < stores.length; i++) {
 
-                        var storesLat = JSONObject.stores[i].lat;
-                        var storesLng = JSONObject.stores[i].lng;
-
+                        var storesLat = stores[i].lat;
+                        var storesLng = stores[i].lng;
                         var storeCity = stores[i].city;
+                        var storeState = stores[i].state;
+                        var storeZip = stores[i].zip;
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
+                        var storeProducts = stores[i].products;
+
+                        var retailerName = "";
+                        var productName = "";
+
+                        // placeholder/workaround for showing retailer name until we figure out lodash
+                        if (storeRetailer === 4) {
+                            retailerName = retailers[0].name;
+                        } else if (storeRetailer === 5) {
+                            retailerName = retailers[1].name
+                        } else if (storeRetailer === 6) {
+                            retailerName = retailers[2].name
+                        } else if (storeRetailer === 7) {
+                            retailerName = retailers[3].name
+                        } else if (storeRetailer === 8) {
+                            retailerName = retailers[4].name
+                        } else if (storeRetailer === 9) {
+                            retailerName = retailers[5].name
+                        } else if (storeRetailer === 10) {
+                            retailerName = retailers[6].name
+                        } else if (storeRetailer === 11) {
+                            retailerName = retailers[7].name
+                        };
+
+                        // placeholder/workaround for showing product name until we figure out lodash
+                        if (storeProducts === "[1]") {
+                            productName = products[0].title;
+                        } else if (storeProducts === "[2]") {
+                            productName = products[1].title
+                        } else if (storeProducts === "[2,1]") {
+                            productName = products[0].title + " & " + products[1].title
+                        } else if (storeProducts === "[1,2]") {
+                            productName = products[0].title + " & " + products[1].title
+                        };
+
                         //add the store information into the HTML id JSON
                         var names = $("<div>").append(
-                            $('<p>').text(storeRetailer),
+                            $('<p>').text(retailerName),
                             $('<p>').text(storeAddress),
-                            $('<p>').text(storeCity + ", "),
+                            $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
+                            $('<p>').text("Products: " + productName),
                             $('<p>').text(Math.floor(storeDistance) + " Miles Away")
-                        )
+                        );
                         $('#JSON').append(names);
 
-                        var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map });
+                        // content for infowindow
+                        var contentString = '<span>' + retailerName + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productName + '</span>';
+
+                        var storeInfowindow = new google.maps.InfoWindow({
+                            content: contentString
+                        });
+
+                        var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map, info: contentString });
 
                         markers.push(marker);
 
-                        marker.info = new google.maps.InfoWindow({
-                            content: '<span>' + storesName + '<br>' + storesAddress + '<br>' + storesCity + '<br>' + storesZip + '<br>' + storesProducts + '</span>'
+                        // click event listener for marker infowindow. Maybe do hover instead of click
+                        marker.addListener('click', function () {
+                            storeInfowindow.setContent(this.info);
+                            storeInfowindow.open(map, this);
                         });
 
-                        marker.addListener('click', function () {
-                            console.log("marker was pressed");
-                            marker.info.open(map, marker)
-                        });
                     };
+                    // storeMarker function end
 
                 });
             };
             storeMarkers();
+
+            // clears input text boxes after search is submitted
+            $("#location-input").val("");
+            $("#miles-input").val("");
         });
 
     };
+    // search addresses/locations function end
 
     // removes markers after submitting new search
     function removeMarkers() {
