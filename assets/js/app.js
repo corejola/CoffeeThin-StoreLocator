@@ -117,6 +117,7 @@ function initMap() {
                     method: "GET"
                 }).then(function (response) {
 
+                    //storing api response into object
                     var JSONObject = JSON.parse(response);
 
                     var products = JSONObject.products;
@@ -138,24 +139,9 @@ function initMap() {
                         var retailerName = "";
                         var productName = "";
 
-                        // placeholder/workaround for showing retailer name until we figure out lodash
-                        if (storeRetailer === 4) {
-                            retailerName = retailers[0].name;
-                        } else if (storeRetailer === 5) {
-                            retailerName = retailers[1].name
-                        } else if (storeRetailer === 6) {
-                            retailerName = retailers[2].name
-                        } else if (storeRetailer === 7) {
-                            retailerName = retailers[3].name
-                        } else if (storeRetailer === 8) {
-                            retailerName = retailers[4].name
-                        } else if (storeRetailer === 9) {
-                            retailerName = retailers[5].name
-                        } else if (storeRetailer === 10) {
-                            retailerName = retailers[6].name
-                        } else if (storeRetailer === 11) {
-                            retailerName = retailers[7].name
-                        };
+                        //using lodash to display the retailer
+
+
 
                         // placeholder/workaround for showing product name until we figure out lodash
                         if (storeProducts === "[1]") {
