@@ -121,7 +121,6 @@ function initMap() {
                 }).then(function (response) {
 
                     var JSONObject = JSON.parse(response);
-                    var retailers = JSONObject.retailers;
                     var stores = JSONObject.stores;
 
                     for (var i = 0; i < stores.length; i++) {
@@ -134,11 +133,10 @@ function initMap() {
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
+                        //begin lodash
                         var retailerName = _.find(JSONObject.retailers, { id: storeRetailer });
                         var retailDisplay = retailerName.name;
-                        var storeProducts = stores[i].products;
 
-                        // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
 
                         var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
                         // || to ensure code doesn't break, set [];
