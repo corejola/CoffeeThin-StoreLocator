@@ -121,7 +121,6 @@ var input = document.getElementById('location-input');
                 }).then(function (response) {
 
                     var JSONObject = JSON.parse(response);
-                    var products = JSONObject.products;
                     var retailers = JSONObject.retailers;
                     var stores = JSONObject.stores;
 
@@ -135,11 +134,8 @@ var input = document.getElementById('location-input');
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
-                        var storeProducts = stores[i].products;
-
                         var retailerName = "";
-                        var productName = "";
-
+        
                         // placeholder/workaround for showing retailer name until we figure out lodash
                         if (storeRetailer === 4) {
                             retailerName = retailers[0].name;
@@ -195,7 +191,7 @@ var input = document.getElementById('location-input');
 
                         markers.push(marker);
 
-                        // click event listener for marker infowindow. Maybe do hover instead of click
+                        // click event listener for marker infowindow. 
                         marker.addListener('click', function () {
                             storeInfowindow.setContent(this.info);
                             storeInfowindow.open(map, this);
