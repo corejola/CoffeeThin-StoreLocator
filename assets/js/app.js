@@ -50,7 +50,7 @@ function initMap() {
             console.log(JSON.parse(response));
             var JSONObject = JSON.parse(response);
             
-    // LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
+// LORRIE: BEGINNING OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
             for (var i = 0; i < JSONObject.stores.length; i++) {
                         var storesLat = JSONObject.stores[i].lat;
                         var storesLng = JSONObject.stores[i].lng;
@@ -58,7 +58,7 @@ function initMap() {
                         var storeCity = JSONObject.stores[i].city;
                         var storeID = JSONObject.stores[i].id;
                         var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
-            // || to ensure code doesn't break, set []
+// || to ensure code doesn't break, set [];
                         var storeRetailer = JSONObject.stores[i].retailer;
                         var storeState = JSONObject.stores[i].state;
                         var storeZip = JSONObject.stores[i].zip;
@@ -68,7 +68,8 @@ function initMap() {
                         );
 
                         var productHTML = productDetails.reduce((result, p) => result + p.title + '<br>', '');
- // LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS, INFOWINDOW FOR MARKERS THAT SHOW FOR STORE LOCATIONS (MISSING STORE NAME & STORE PRODUCTS)
+ 
+ // LORRIE: (BEGINNING) OF CODE SNIPPET FOR BOUNCING ON MARKERS
  let marker = new google.maps.Marker(
     {
         position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
@@ -76,7 +77,7 @@ function initMap() {
         // icon: ,
         animation: google.maps.Animation.BOUNCE
     });
-
+// LORRIE: (END) OF CODE SNIPPET FOR BOUNCING ON MARKERS
 
 
 
@@ -88,7 +89,9 @@ marker.addListener('click', function () {
     console.log("marker was pressed");
     marker.info.open(map, marker)
 
-    // marker.addListener ('click, toggleBounce');
+// LORRIE: END OF CODE FOR PLACING STORENAME & PRODUCTS ON INFOWINDOW)
+    
+// marker.addListener ('click, toggleBounce');
 });
             }
 
