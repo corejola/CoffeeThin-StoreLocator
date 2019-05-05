@@ -122,12 +122,15 @@ function initMap() {
 
                     var JSONObject = JSON.parse(response);
                     var stores = JSONObject.stores;
+                    console.log(JSONObject);
 
                     for (var i = 0; i < stores.length; i++) {
 
                         var storesLat = stores[i].lat;
                         var storesLng = stores[i].lng;
                         var storeCity = stores[i].city;
+                        var storeState = stores[i].state;
+                        // LORRIE: BEGINNING OF CODE FORE DIRECTIONS TO STORE
                         var storeState = stores[i].state;
                         var storeZip = stores[i].zip;
                         var storeAddress = stores[i].address;
@@ -168,10 +171,24 @@ function initMap() {
                             content: contentString
                         });
 
-                        var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map, info: contentString });
+                        // BEGINNING LORRIE: STOREDIRECTIONSLINK #36
+                        // directions url: https://www.google.com/maps/dir/?api=1&parameters 
+                        var marker = new google.maps.Marker(
+                            {
+                                position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
+                                map: map,
+                                info: contentString,
+                                url: "https://www.google.com/maps/dir/?api=1&origin=" + address + "/&destination=/" + storeAddress + "/%2C/" + storeCity+ "/%2C/"+ storeState + "/%2C/" + storeZip 
+                            });
 
                         markers.push(marker);
-
+                        
+                        // click event listener for marker url
+                        google.maps.event.addListener(marker, "click", function () {
+                            window.open(this.url, "_blank");
+                        });
+                        // END LORRIE: STOREDIRECTIONSLINK #36
+                        
                         // click event listener for marker infowindow. 
                         marker.addListener('click', function () {
                             storeInfowindow.setContent(this.info);
