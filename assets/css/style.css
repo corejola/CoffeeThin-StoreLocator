@@ -41,12 +41,17 @@
 #styleScroll::-webkit-scrollbar
 {
     width: 12px;
-    background-color: #ff6e0c;
+    background-color: #ed4699;
 }
 
 #styleScroll::-webkit-scrollbar-thumb
 {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
-    background-color: #ed4699;
+    background-color: #663600;
+}
+
+footer {
+    padding: 20px;
+    background: #ed4699;
 }
