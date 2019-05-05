@@ -122,7 +122,6 @@ function initMap() {
 
                     var JSONObject = JSON.parse(response);
                     var stores = JSONObject.stores;
-                    console.log(JSONObject);
 
                     for (var i = 0; i < stores.length; i++) {
 
@@ -172,7 +171,7 @@ function initMap() {
                         });
 
                         // BEGINNING LORRIE: STOREDIRECTIONSLINK #36
-                        // directions url: https://www.google.com/maps/dir/?api=1&parameters 
+                        // Google Maps API directions url: https://www.google.com/maps/dir/?api=1&parameters based off origin (input address or zip and destination (store marker selected)
                         var marker = new google.maps.Marker(
                             {
                                 position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
@@ -183,7 +182,7 @@ function initMap() {
 
                         markers.push(marker);
                         
-                        // click event listener for marker url
+                        // click event listener for marker url that opens Google Maps Directions link
                         google.maps.event.addListener(marker, "click", function () {
                             window.open(this.url, "_blank");
                         });
