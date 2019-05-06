@@ -25,6 +25,20 @@
     background-color: #ed4699;
 }
 
+.title {
+    color: #663600;
+    font-family: 'Merriweather', serif;
+}
+
+.input{
+    color: #663600;
+    font-family: 'Merriweather', serif;
+}
+
+.button {
+    color: white;
+    background-color:#ed4699; 
+}
 .vertical-menu {
     width: 100%;
     height: 400px;
