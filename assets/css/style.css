@@ -9,10 +9,11 @@
 
 .nav-wrapper, .footer-copyright, .nav-content, .nav-extended {
     background-color: #ed4699;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
 .brand-logo {
-    margin-left: 5%;
+    margin-left: 3%;
 }
 
 .right {
