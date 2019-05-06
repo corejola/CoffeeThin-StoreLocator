@@ -112,6 +112,10 @@
     color: white;
     text-align: center;
 }
+
+.footer-copyright > a {
+    color: white;
+}
 footer {
     padding: 25px;
     background: #ed4699;
