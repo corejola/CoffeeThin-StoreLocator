@@ -25,48 +25,49 @@
 
         <!--row one: logo and nav bar-->
         <div class="row">
-
-            <div class="col m12">
-                <nav class="nav-extended">
-                    <div class="nav-wrapper">
-                        <img src="assets/images/Tierra-nueva-dunkin-assets/burst-coffee.png" width="75px" height="75px"
-                            class="brand-logo"></img>
-                        <a href="#" class="brand-logo">Tierra Nueva</a>
-                        <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i
-                                class="material-icons">menu</i></a>
-                        <ul id="nav-mobile" class="right hide-on-med-and-down">
-                            <li><a href="sass.html">Products</a></li>
-                            <li><a href="badges.html">Press</a></li>
-                            <li><a href="collapsible.html">About Tierra Nueva</a></li>
-                        </ul>
-                    </div>
-                </nav>
-            </div>
-            <!--end the column one-->
-            <!--end colunm two: nav bar-->
+            <nav class="nav-extended">
+                <div class="nav-wrapper">
+                    <img src="assets/images/Tierra-nueva-dunkin-assets/burst-coffee.png" width="75px" height="75px"
+                        class="brand-logo"></img>
+                    <a href="#" class="brand-logo">TIERRA NUEVA</a>
+                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">Menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
+                        <li><a href="https://ediblecoffee.com/coffee">Products</a></li>
+                        <li><a href="https://ediblecoffee.com/press">Press</a></li>
+                        <li><a href="https://ediblecoffee.com/history">About Tierra Nueva</a></li>
+                    </ul>
+                </div>
+                <!-- <div class="nav-content">
+                    <span class="nav-title"><img class="icon"
+                            src="assets\images\Tierra-nueva-dunkin-assets\packagin-right.png" width="100px"
+                            height="100px"> </span>
+                </div> -->
+            </nav>
         </div>
-        <!--end row one-->
+        <!--end the column one-->
+        <!--end colunm two: nav bar-->
+    </div>
+    <!--end row one-->
     </div>
     <!-- end container one-->
 
     <!--container two-->
     <div class="container">
 
-        <!--row will hold input fields and banner-->
+        <!--row will hold input fields-->
         <div class="row">
-            <div class="col m7">
+            <div class="col m12">
                 <h3 class="text-center" style="color:#ed4699 "> Find Coffee Thins Near You!</h3>
                 <div class="row">
+                    <!--input field 1-->
                     <div class="col m6">
                         <form>
-                            <!--input field 1-->
                             <div class="form-group">
                                 <strong><label for="location" style="color:#663600">Address or Zip
                                         Code</label></strong>
                                 <input class="form-control" id="location-input" placeholder="90095" type="text">
                             </div>
                     </div>
-
                     <div class="col m6">
                         <form>
                             <div class="form-group">
@@ -84,56 +85,49 @@
                 </div>
 
             </div>
-            <!--end column one: input-->
-            <div class="col m5">
-                <img src="assets/images/banner-photo.jpg" width="100%">
-            </div>
-            <!--end column two: banner-->
+            <!--ends second row-->
 
-        </div>
-        <!--ends second row-->
-    </div>
-    <!--ends second container-->
 
-    <!--container three -->
-    <div class="container">
+            <!--row three: map-holder and locator-holder -->
+            <div class="row">
 
-        <!--row three: map-holder and locator-holder -->
-        <div class="row">
+                <!--column one: map-holder-->
+                <div class="col m8">
 
-            <!--column one: map-holder-->
-            <div class="col m8">
-
-                <!--Bootstrap Google Custom Map-->
-                <div id="map">
+                    <!--Bootstrap Google Custom Map-->
+                    <div id="map">
+                    </div>
+                    <!-- <div class="w-auto p-3" style="background-color: #eee;">Width auto</div> -->
+                    <!--Google Maps ends map-holder-->
                 </div>
-                <!-- <div class="w-auto p-3" style="background-color: #eee;">Width auto</div> -->
-                <!--Google Maps ends map-holder-->
-            </div>
-            <!--ends column one: map-holder-->
-            <div class="col m4">
-                <div class="vertical-menu scrollbar" id="styleScroll">
-                    <ol id="JSON">
+                <!--ends column one: map-holder-->
+                <div class="col m4">
+                    <div class="vertical-menu scrollbar" id="styleScroll">
+                        <ol id="JSON" class="custom-counter">
 
-                    </ol>
+                        </ol>
+                    </div>
                 </div>
             </div>
+            <!--end column two: locator-holder-->
         </div>
-        <!--end column two: locator-holder-->
-    </div>
-    <!--ends column three: scroll bar-->
+        <!--ends column three: scroll bar-->
 
-    <footer class="container">
-        <div class="footer-copyright">
-            © 2019 Copyright Text
-            <a class="grey-text text-lighten-4 right" href="#!">More Links</a>
-    </footer>
+        <footer>
+            <img class="grey-text text-lighten-4 left valign-wrapper"
+                src="assets\images\Tierra-nueva-dunkin-assets\tn-contact.png" width="50px" height="50px">
+            <div class="footer-copyright">
+                © 2019 Copyright Text>
+                <a class="grey-text text-lighten-4 right" href="https://ediblecoffee.com/">Edible Coffee</a>
+        </footer>
 
-    <script src="assets/js/app.js">
-    </script>
-    <script async defer
-        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&libraries=places&callback=initMap">
+
+
+        <script src="assets/js/app.js">
         </script>
+        <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&libraries=places&callback=initMap">
+            </script>
 
 </body>
 

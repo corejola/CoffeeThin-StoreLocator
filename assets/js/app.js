@@ -153,9 +153,9 @@ function initMap() {
 
                         //add the store information into the HTML id JSON
                         var names = $("<li>").append(
-                            $('<p>').text(retailDisplay),
-                            $('<p>').text(storeAddress),
-                            $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
+                            $('<p>').text(retailDisplay).attr("class", "retailers"),
+                            $('<p>').html(storeAddress + "<br>" + storeCity + ", " + storeState + " " + storeZip),
+                            // $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
                             $('<p>').html("Products: " + productHTML),
                             $('<p>').text(Math.floor(storeDistance) + " Miles Away")
                         );

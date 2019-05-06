@@ -7,7 +7,20 @@
     text-align: center;
 }
 
-.nav-wrapper, .footer-copyright {
+.nav-wrapper, .footer-copyright, .nav-content, .nav-extended {
+    background-color: #ed4699;
+}
+
+.brand-logo {
+    margin-left: 5%;
+}
+
+.right {
+    margin-right: 5%;
+}
+.nav-content {
+    font-size: 50%;
+    margin-left: 5%;
     background-color: #ed4699;
 }
 
@@ -25,9 +38,9 @@
     width: 100%;
     overflow-y: scroll;
     margin-bottom: 25px;
-}
-.footer-copyright {
-    color: white;
+    font-size: 1.2em;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    /* margin: 50px; */
 }
 
 #styleScroll::-webkit-scrollbar-track
@@ -51,7 +64,40 @@
     background-color: #663600;
 }
 
+/* custom numbers */
+.custom-counter {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .custom-counter li {
+    counter-increment: step-counter;
+    margin-bottom: 10px;
+  }
+  
+  .custom-counter li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-size: 80%;
+    background-color: #ed4699;
+    color: white;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 3px;
+    float:left;
+  }
+
+  .retailers {
+      font-weight: bold;
+      color: #663600;    
+  }
+
+.footer-copyright {
+    color: white;
+    text-align: center;
+}
 footer {
-    padding: 20px;
+    padding: 25px;
     background: #ed4699;
 }
