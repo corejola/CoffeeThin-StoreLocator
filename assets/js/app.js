@@ -121,8 +121,9 @@ function initMap() {
                     method: "GET"
                 }).then(function (response) {
 
-                    var JSONObject = JSON.parse(response);
-                    var stores = JSONObject.stores;
+                    var data = JSON.parse(response);
+                    console.log(data);
+                    var stores = data.stores;
 
                     for (var i = 0; i < stores.length; i++) {
 
@@ -135,17 +136,17 @@ function initMap() {
                         var storeDistance = stores[i].distance;
                         var storeRetailer = stores[i].retailer;
                         //begin lodash
-                        var retailerName = _.find(JSONObject.retailers, { id: storeRetailer });
+                        var retailerName = _.find(data.retailers, { id: storeRetailer });
                         var retailDisplay = retailerName.name;
 
 
-                        var storeProductIDs = JSON.parse(JSONObject.stores[i].products) || [];
+                        var storeProductIDs = JSON.parse(data.stores[i].products) || [];
                         // || to ensure code doesn't break, set [];
-                        var storeRetailer = JSONObject.stores[i].retailer;
+                        var storeRetailer = data.stores[i].retailer;
                         // turn string array to JS array, get product details, then create HTML string for info window
                         var productHTML = storeProductIDs
                             .map(function (productId) {
-                                return JSONObject.products
+                                return data.products
                                     .find(function (product) {
                                         return productId === product.id
                                     });
@@ -173,8 +174,8 @@ function initMap() {
                         var marker = new google.maps.Marker({ 
                             position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, 
                             map: map, 
-                            info: contentString
-                            // label: label
+                            info: contentString,
+                            label: (i + 1).toString()
                         })
                         
                         // LORRIE: end of code to add number to marker num_events+ 
@@ -192,7 +193,7 @@ function initMap() {
                 });
             };
             storeMarkers();
-            label++
+        
             
 
             // clears input text boxes after search is submitted
