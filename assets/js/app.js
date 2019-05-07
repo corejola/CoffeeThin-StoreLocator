@@ -129,7 +129,6 @@ function initMap() {
                         var storesLng = stores[i].lng;
                         var storeCity = stores[i].city;
                         var storeState = stores[i].state;
-                        // LORRIE: BEGINNING OF CODE FORE DIRECTIONS TO STORE
                         var storeState = stores[i].state;
                         var storeZip = stores[i].zip;
                         var storeAddress = stores[i].address;
@@ -153,40 +152,39 @@ function initMap() {
                             })
                             .reduce(function (result, p) { return result + p.title + '<br>'; }, '');
 
+                        
+                        // BEGINNING LORRIE: STOREDIRECTIONSLINK #36
+                        // content for infowindow
+                        var directionsURL = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(address) + "/&destination=/" + encodeURIComponent(storeAddress) + "/%2C/" + encodeURIComponent(storeCity) + "/%2C/"+ encodeURIComponent(storeState) + "/%2C/" + encodeURIComponent(storeZip);
+
                         //add the store information into the HTML id JSON
                         var names = $("<li>").append(
                             $('<p>').text(retailDisplay),
                             $('<p>').text(storeAddress),
                             $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
                             $('<p>').html("Products: " + productHTML),
-                            $('<p>').text(Math.floor(storeDistance) + " Miles Away")
-                        );
+                            $('<p>').text(Math.floor(storeDistance) + " Miles Away"),
+                            $('<p>').html('<a href=' + directionsURL + ' target="_blank">Directions to Store</a>'));            
+                                
                         $('#JSON').append(names);
+                        
+                        // END LORRIE: STOREDIRECTIONSLINK 
 
-                        // content for infowindow
-                        var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '</span>';
+                        var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
 
                         var storeInfowindow = new google.maps.InfoWindow({
                             content: contentString
                         });
 
-                        // BEGINNING LORRIE: STOREDIRECTIONSLINK #36
-                        // Google Maps API directions url: https://www.google.com/maps/dir/?api=1&parameters based off origin (input address or zip and destination (store marker selected)
+                        
                         var marker = new google.maps.Marker(
                             {
                                 position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
                                 map: map,
-                                info: contentString,
-                                url: "https://www.google.com/maps/dir/?api=1&origin=" + address + "/&destination=/" + storeAddress + "/%2C/" + storeCity+ "/%2C/"+ storeState + "/%2C/" + storeZip 
+                                info: contentString 
                             });
 
                         markers.push(marker);
-                        
-                        // click event listener for marker url that opens Google Maps Directions link
-                        google.maps.event.addListener(marker, "click", function () {
-                            window.open(this.url, "_blank");
-                        });
-                        // END LORRIE: STOREDIRECTIONSLINK #36
                         
                         // click event listener for marker infowindow. 
                         marker.addListener('click', function () {
