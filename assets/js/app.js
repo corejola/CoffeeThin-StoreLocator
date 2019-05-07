@@ -78,6 +78,7 @@ function initMap() {
         // empties location list after submitting new search
         clearList();
         geocodeAddress(geocoder, map);
+
     });
 
     // allows pressing "Enter" key to submit form
@@ -199,6 +200,18 @@ function initMap() {
             // clears input text boxes after search is submitted
             $("#location-input").val("");
             $("#miles-input").val("");
+
+            function secondSearch(latitude, longitude) {
+
+                var secondOptions = {
+                    zoom: 10,
+                    center: { lat: latitude, lng: longitude }
+                }
+                map = new google.maps.Map(document.getElementById('map'), secondOptions);
+            };
+
+            secondSearch(latitude, longitude);
+            // return (latitude, longitude)
         });
 
     };
