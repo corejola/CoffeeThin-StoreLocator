@@ -64,25 +64,33 @@ function initMap() {
     // Autocomplete function begin
     var input = document.getElementById('location-input');
 
-
     var autocomplete = new google.maps.places.Autocomplete(input);
 
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
     });
-
-    // stores new Geocoder object into a variable
-    var geocoder = new google.maps.Geocoder();
+    // autocomplete function end
 
     document.getElementById('locate-button').addEventListener('click', function (event) {
-        // Needs to be merged with master
         event.preventDefault();
         // removes markers after submitting new search
         removeMarkers();
+        // empties location list after submitting new search
         clearList();
         geocodeAddress(geocoder, map);
+
     });
-    // autocomplete function end
+
+    // allows pressing "Enter" key to submit form
+    document.addEventListener('keyup', function (event) {
+        if (event.keyCode == 13) {
+            // Simulate clicking on the submit button.
+            document.getElementById('locate-button').click();
+        }
+    });
+
+    // stores new Geocoder object into a variable
+    var geocoder = new google.maps.Geocoder();
 
     // search addresses/locations function begin
     function geocodeAddress(geocoder, resultsMap) {
@@ -152,22 +160,21 @@ function initMap() {
                             })
                             .reduce(function (result, p) { return result + p.title + '<br>'; }, '');
 
-                        
+
                         // BEGINNING LORRIE: STOREDIRECTIONSLINK #36
                         // content for infowindow
-                        var directionsURL = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(address) + "/&destination=/" + encodeURIComponent(storeAddress) + "/%2C/" + encodeURIComponent(storeCity) + "/%2C/"+ encodeURIComponent(storeState) + "/%2C/" + encodeURIComponent(storeZip);
+                        var directionsURL = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(address) + "/&destination=/" + encodeURIComponent(storeAddress) + "/%2C/" + encodeURIComponent(storeCity) + "/%2C/" + encodeURIComponent(storeState) + "/%2C/" + encodeURIComponent(storeZip);
 
                         //add the store information into the HTML id JSON
                         var names = $("<li>").append(
-                            $('<p>').text(retailDisplay),
-                            $('<p>').text(storeAddress),
-                            $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
+                            $('<p>').text(retailDisplay).attr("class", "retailers"),
+                            $('<p>').html(storeAddress + "<br>" + storeCity + ", " + storeState + " " + storeZip),
                             $('<p>').html("Products: " + productHTML),
                             $('<p>').text(Math.floor(storeDistance) + " Miles Away"),
-                            $('<p>').html('<a href=' + directionsURL + ' target="_blank">Directions to Store</a>'));            
-                                
+                            $('<p>').html('<a href=' + directionsURL + ' target="_blank">Directions to Store</a>'));
+
                         $('#JSON').append(names);
-                        
+
                         // END LORRIE: STOREDIRECTIONSLINK 
 
                         var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
@@ -176,16 +183,14 @@ function initMap() {
                             content: contentString
                         });
 
-                        
-                        var marker = new google.maps.Marker(
-                            {
-                                position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
-                                map: map,
-                                info: contentString 
-                            });
+                        var marker = new google.maps.Marker({
+                            position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
+                            map: map,
+                            info: contentString
+                        });
 
                         markers.push(marker);
-                        
+
                         // click event listener for marker infowindow. 
                         marker.addListener('click', function () {
                             storeInfowindow.setContent(this.info);
@@ -202,6 +207,18 @@ function initMap() {
             // clears input text boxes after search is submitted
             $("#location-input").val("");
             $("#miles-input").val("");
+
+            function secondSearch(latitude, longitude) {
+
+                var secondOptions = {
+                    zoom: 10,
+                    center: { lat: latitude, lng: longitude }
+                }
+                map = new google.maps.Map(document.getElementById('map'), secondOptions);
+            };
+
+            secondSearch(latitude, longitude);
+            // return (latitude, longitude)
         });
 
     };
