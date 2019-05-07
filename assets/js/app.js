@@ -64,26 +64,33 @@ function initMap() {
     // Autocomplete function begin
     var input = document.getElementById('location-input');
 
-
     var autocomplete = new google.maps.places.Autocomplete(input);
 
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
     });
-
-    // stores new Geocoder object into a variable
-    var geocoder = new google.maps.Geocoder();
+    // autocomplete function end
 
     document.getElementById('locate-button').addEventListener('click', function (event) {
-        // Needs to be merged with master
         event.preventDefault();
         // removes markers after submitting new search
         removeMarkers();
+        // empties location list after submitting new search
         clearList();
         geocodeAddress(geocoder, map);
 
     });
-    // autocomplete function end
+
+    // allows pressing "Enter" key to submit form
+    document.addEventListener('keyup', function (event) {
+        if (event.keyCode == 13) {
+            // Simulate clicking on the submit button.
+            document.getElementById('locate-button').click();
+        }
+    });
+
+    // stores new Geocoder object into a variable
+    var geocoder = new google.maps.Geocoder();
 
     // search addresses/locations function begin
     function geocodeAddress(geocoder, resultsMap) {
@@ -169,7 +176,11 @@ function initMap() {
                             content: contentString
                         });
 
-                        var marker = new google.maps.Marker({ position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, map: map, info: contentString });
+                        var marker = new google.maps.Marker({
+                            position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
+                            map: map,
+                            info: contentString
+                        });
 
                         markers.push(marker);
 

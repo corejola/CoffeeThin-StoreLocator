@@ -1,4 +1,4 @@
-#map{
+#map {
     height: 400px;
     width: 100%;
 }
@@ -19,6 +19,7 @@
 .right {
     margin-right: 5%;
 }
+
 .nav-content {
     font-size: 50%;
     margin-left: 5%;
@@ -30,23 +31,23 @@
     font-family: 'Merriweather', serif;
 }
 
-.input{
+.input {
     color: #663600;
     font-family: 'Merriweather', serif;
 }
 
 .button {
     color: white;
-    background-color:#ed4699; 
+    background-color: #ed4699;
 }
+
 .vertical-menu {
     width: 100%;
     height: 400px;
     overflow-y: auto;
-  }
+}
 
-  .scrollbar
-{
+.scrollbar {
     margin-left: 30px;
     float: left;
     height: 400px;
@@ -58,40 +59,44 @@
     /* margin: 50px; */
 }
 
-#styleScroll::-webkit-scrollbar-track
-{
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,0.3);
+#styleScroll::-webkit-scrollbar-track {
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.3);
     border-radius: 10px;
-    background-color:#cdcdcd
-    99;
+    background-color: #cdcdcd 99;
 }
 
-#styleScroll::-webkit-scrollbar
-{
+#styleScroll::-webkit-scrollbar {
     width: 12px;
     background-color: #ed4699;
 }
 
-#styleScroll::-webkit-scrollbar-thumb
-{
+#styleScroll::-webkit-scrollbar-thumb {
     border-radius: 10px;
-    -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
+    background-color: #ed4699;
+}
+
+.input-field {
+    margin: 0 0 4px 0;
+    border-radius: 10px;
+    -webkit-box-shadow: inset 0 0 6px rgba(0, 0, 0, .3);
     background-color: #663600;
 }
 
 /* custom numbers */
+
 .custom-counter {
     margin: 0;
     padding: 0;
     list-style-type: none;
-  }
-  
-  .custom-counter li {
+}
+
+.custom-counter li {
     counter-increment: step-counter;
     margin-bottom: 10px;
-  }
-  
-  .custom-counter li::before {
+}
+
+.custom-counter li::before {
     content: counter(step-counter);
     margin-right: 5px;
     font-size: 80%;
@@ -100,22 +105,23 @@
     font-weight: bold;
     padding: 3px 8px;
     border-radius: 3px;
-    float:left;
-  }
+    float: left;
+}
 
-  .retailers {
-      font-weight: bold;
-      color: #663600;    
-  }
+.retailers {
+    font-weight: bold;
+    color: #663600;
+}
 
 .footer-copyright {
     color: white;
     text-align: center;
 }
 
-.footer-copyright > a {
+.footer-copyright>a {
     color: white;
 }
+
 footer {
     padding: 25px;
     background: #ed4699;
