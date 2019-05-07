@@ -7,10 +7,38 @@
     text-align: center;
 }
 
-.nav-wrapper, .footer-copyright {
+.nav-wrapper, .footer-copyright, .nav-content, .nav-extended {
+    background-color: #ed4699;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+.brand-logo {
+    margin-left: 3%;
+}
+
+.right {
+    margin-right: 5%;
+}
+.nav-content {
+    font-size: 50%;
+    margin-left: 5%;
     background-color: #ed4699;
 }
 
+.title {
+    color: #663600;
+    font-family: 'Merriweather', serif;
+}
+
+.input{
+    color: #663600;
+    font-family: 'Merriweather', serif;
+}
+
+.button {
+    color: white;
+    background-color:#ed4699; 
+}
 .vertical-menu {
     width: 100%;
     height: 400px;
@@ -25,9 +53,9 @@
     width: 100%;
     overflow-y: scroll;
     margin-bottom: 25px;
-}
-.footer-copyright {
-    color: white;
+    font-size: 1.2em;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
+    /* margin: 50px; */
 }
 
 #styleScroll::-webkit-scrollbar-track
@@ -41,12 +69,54 @@
 #styleScroll::-webkit-scrollbar
 {
     width: 12px;
-    background-color: #ff6e0c;
+    background-color: #ed4699;
 }
 
 #styleScroll::-webkit-scrollbar-thumb
 {
     border-radius: 10px;
     -webkit-box-shadow: inset 0 0 6px rgba(0,0,0,.3);
+    background-color: #663600;
+}
+
+/* custom numbers */
+.custom-counter {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+  }
+  
+  .custom-counter li {
+    counter-increment: step-counter;
+    margin-bottom: 10px;
+  }
+  
+  .custom-counter li::before {
+    content: counter(step-counter);
+    margin-right: 5px;
+    font-size: 80%;
     background-color: #ed4699;
+    color: white;
+    font-weight: bold;
+    padding: 3px 8px;
+    border-radius: 3px;
+    float:left;
+  }
+
+  .retailers {
+      font-weight: bold;
+      color: #663600;    
+  }
+
+.footer-copyright {
+    color: white;
+    text-align: center;
+}
+
+.footer-copyright > a {
+    color: white;
+}
+footer {
+    padding: 25px;
+    background: #ed4699;
 }
