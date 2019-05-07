@@ -137,6 +137,7 @@ function initMap() {
                         var storesLng = stores[i].lng;
                         var storeCity = stores[i].city;
                         var storeState = stores[i].state;
+                        var storeState = stores[i].state;
                         var storeZip = stores[i].zip;
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
@@ -159,18 +160,24 @@ function initMap() {
                             })
                             .reduce(function (result, p) { return result + p.title + '<br>'; }, '');
 
+
+                        // BEGINNING LORRIE: STOREDIRECTIONSLINK #36
+                        // content for infowindow
+                        var directionsURL = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(address) + "/&destination=/" + encodeURIComponent(storeAddress) + "/%2C/" + encodeURIComponent(storeCity) + "/%2C/" + encodeURIComponent(storeState) + "/%2C/" + encodeURIComponent(storeZip);
+
                         //add the store information into the HTML id JSON
                         var names = $("<li>").append(
                             $('<p>').text(retailDisplay).attr("class", "retailers"),
                             $('<p>').html(storeAddress + "<br>" + storeCity + ", " + storeState + " " + storeZip),
-                            // $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
                             $('<p>').html("Products: " + productHTML),
-                            $('<p>').text(Math.floor(storeDistance) + " Miles Away")
-                        );
+                            $('<p>').text(Math.floor(storeDistance) + " Miles Away"),
+                            $('<p>').html('<a href=' + directionsURL + ' target="_blank">Directions to Store</a>'));
+
                         $('#JSON').append(names);
 
-                        // content for infowindow
-                        var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '</span>';
+                        // END LORRIE: STOREDIRECTIONSLINK 
+
+                        var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
 
                         var storeInfowindow = new google.maps.InfoWindow({
                             content: contentString
