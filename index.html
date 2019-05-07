@@ -21,10 +21,8 @@
 </head>
 
 <body>
-    <!--creating grid system-->
     <div class="container">
 
-        <!--row one: logo and nav bar-->
         <div class="row">
             <nav class="nav-extended">
                 <div class="nav-wrapper">
@@ -38,29 +36,17 @@
                         <li><a href="https://ediblecoffee.com/history">About Tierra Nueva</a></li>
                     </ul>
                 </div>
-                <!-- <div class="nav-content">
-                    <span class="nav-title"><img class="icon"
-                            src="assets\images\Tierra-nueva-dunkin-assets\packagin-right.png" width="100px"
-                            height="100px"> </span>
-                </div> -->
             </nav>
         </div>
-        <!--end the column one-->
-        <!--end colunm two: nav bar-->
     </div>
-    <!--end row one-->
-    </div>
-    <!-- end container one-->
 
-    <!--container two-->
     <div class="container">
 
-        <!--row will hold input fields-->
         <div class="row">
             <div class="col m12">
                 <h4 class="text-center title"> Find Coffee Thins Near You!</h4>
                 <div class="row">
-                    <!--input field 1-->
+                    <!-- User Input -->
                     <div class="col m6">
                         <form>
                             <div class="form-group">
@@ -75,33 +61,20 @@
                                 <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
                                 <input class="form-control" id="miles-input" placeholder="25 miles" type="text">
                             </div>
-
-                            <!--button to submit-->
-                            <!-- <button class="btn btn-primary float-right" id="add-employee-btn">Submit</button> -->
                             <input id="locate-button" type="submit"
                                 class="btn waves-effect waves-orange btn-flat float-right button"
                                 style="background:#ed4699; color:white" value="Submit">
                         </form>
                     </div>
                 </div>
-
             </div>
-            <!--ends second row-->
 
-
-            <!--row three: map-holder and locator-holder -->
             <div class="row">
-
-                <!--column one: map-holder-->
                 <div class="col m8">
-
-                    <!--Bootstrap Google Custom Map-->
+                    <!--Google Map-->
                     <div id="map">
                     </div>
-                    <!-- <div class="w-auto p-3" style="background-color: #eee;">Width auto</div> -->
-                    <!--Google Maps ends map-holder-->
                 </div>
-                <!--ends column one: map-holder-->
                 <div class="col m4">
                     <div class="vertical-menu scrollbar" id="styleScroll">
                         <ol id="JSON" class="custom-counter">
@@ -110,9 +83,8 @@
                     </div>
                 </div>
             </div>
-            <!--end column two: locator-holder-->
+
         </div>
-        <!--ends column three: scroll bar-->
 
         <footer>
             <img class="grey-text text-lighten-4 left valign-wrapper"
