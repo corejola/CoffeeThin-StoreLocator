@@ -61,29 +61,36 @@ function initMap() {
     };
     // user location detection function end
 
-
     // Autocomplete function begin
     var input = document.getElementById('location-input');
-
 
     var autocomplete = new google.maps.places.Autocomplete(input);
 
     autocomplete.addListener('place_changed', function () {
         var place = autocomplete.getPlace();
     });
-
-    // stores new Geocoder object into a variable
-    var geocoder = new google.maps.Geocoder();
+    // autocomplete function end
 
     document.getElementById('locate-button').addEventListener('click', function (event) {
-        // Needs to be merged with master
         event.preventDefault();
         // removes markers after submitting new search
         removeMarkers();
+        // empties location list after submitting new search
         clearList();
         geocodeAddress(geocoder, map);
+
     });
-    // autocomplete function end
+
+    // allows pressing "Enter" key to submit form
+    document.addEventListener('keyup', function (event) {
+        if (event.keyCode == 13) {
+            // Simulate clicking on the submit button.
+            document.getElementById('locate-button').click();
+        }
+    });
+
+    // stores new Geocoder object into a variable
+    var geocoder = new google.maps.Geocoder();
 
     // search addresses/locations function begin
     function geocodeAddress(geocoder, resultsMap) {
@@ -131,6 +138,7 @@ function initMap() {
                         var storesLng = stores[i].lng;
                         var storeCity = stores[i].city;
                         var storeState = stores[i].state;
+                        var storeState = stores[i].state;
                         var storeZip = stores[i].zip;
                         var storeAddress = stores[i].address;
                         var storeDistance = stores[i].distance;
@@ -138,7 +146,6 @@ function initMap() {
                         //begin lodash
                         var retailerName = _.find(data.retailers, { id: storeRetailer });
                         var retailDisplay = retailerName.name;
-
 
                         var storeProductIDs = JSON.parse(data.stores[i].products) || [];
                         // || to ensure code doesn't break, set [];
@@ -153,34 +160,36 @@ function initMap() {
                             })
                             .reduce(function (result, p) { return result + p.title + '<br>'; }, '');
 
+                        // content for infowindow
+                        var directionsURL = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(address) + "/&destination=/" + encodeURIComponent(storeAddress) + "/%2C/" + encodeURIComponent(storeCity) + "/%2C/" + encodeURIComponent(storeState) + "/%2C/" + encodeURIComponent(storeZip);
+
                         //add the store information into the HTML id JSON
                         var names = $("<li>").append(
-                            $('<p>').text(retailDisplay),
-                            $('<p>').text(storeAddress),
-                            $('<p>').text(storeCity + ", " + storeState + " " + storeZip),
+                            $('<p>').text(retailDisplay).attr("class", "retailers"),
+                            $('<p>').html(storeAddress + "<br>" + storeCity + ", " + storeState + " " + storeZip),
                             $('<p>').html("Products: " + productHTML),
-                            $('<p>').text(Math.floor(storeDistance) + " Miles Away")
-                        );
+                            $('<p>').text(Math.floor(storeDistance) + " Miles Away"),
+                            $('<p>').html('<a href=' + directionsURL + ' target="_blank">Directions to Store</a>'));
+
                         $('#JSON').append(names);
 
-                        // content for infowindow
-                        var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '</span>';
+
+                        var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
 
                         var storeInfowindow = new google.maps.InfoWindow({
                             content: contentString
                         });
 
-                        // LORRIE: beginning of code to add number to marker
-                        var marker = new google.maps.Marker({ 
-                            position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) }, 
-                            map: map, 
+                        // beginning of code to add number to marker
+                        var marker = new google.maps.Marker({
+                            position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
+                            map: map,
                             info: contentString,
                             label: (i + 1).toString()
                         })
-                        
-                        // LORRIE: end of code to add number to marker num_events+ 
+
                         markers.push(marker);
-        
+
                         // click event listener for marker infowindow. 
                         marker.addListener('click', function () {
                             storeInfowindow.setContent(this.info);
@@ -193,12 +202,22 @@ function initMap() {
                 });
             };
             storeMarkers();
-        
-            
 
             // clears input text boxes after search is submitted
             $("#location-input").val("");
             $("#miles-input").val("");
+
+            function secondSearch(latitude, longitude) {
+
+                var secondOptions = {
+                    zoom: 10,
+                    center: { lat: latitude, lng: longitude }
+                }
+                map = new google.maps.Map(document.getElementById('map'), secondOptions);
+            };
+
+            secondSearch(latitude, longitude);
+            // return (latitude, longitude)
         });
 
     };
