@@ -64,7 +64,7 @@
                             </div>
                             <input id="locate-button" type="submit"
                                 class="btn waves-effect waves-orange btn-flat float-right button"
-                                style="background:#ed4699; color:white" value="Submit">
+                                style="background:#ed4699; color:white" value="SEARCH!">
                         </form>
                     </div>
                 </div>
@@ -78,7 +78,9 @@
                 </div>
                 <div class="col m4">
                     <div class="row">
-                        <span id="distanceFromYou"></span>
+                        <div id="distanceFromYou">
+                            Find Coffee Thins Within <span id="distFromYou"></span> Miles From You!
+                        </div>
                     </div>
                     <div class="row">
                         <div class="vertical-menu scrollbar" id="styleScroll">
@@ -102,7 +104,8 @@
 
 
         <script src="assets/js/app.js"></script>
-        <script src="assets/js/firebaseMap.js"></script>
+        <!-- Console log firebase for tests -->
+        <!-- <script src="assets/js/firebaseMap.js"></script> -->
         <!-- link Google Maps API with callback function -->
         <script async defer
             src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&libraries=places&callback=initMap">

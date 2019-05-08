@@ -7,8 +7,12 @@
     text-align: center;
 }
 
-.nav-wrapper, .footer-copyright, .nav-content, .nav-extended {
-    background-color: #ed4699;
+.nav-wrapper{
+    height: 75px;
+    width: 100%;
+}
+.nav-wrapper, .nav-content, .nav-extended {
+    background-color: #663600;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
 
@@ -23,17 +27,24 @@
 .nav-content {
     font-size: 50%;
     margin-left: 5%;
-    background-color: #ed4699;
+    background-color: #663600;
 }
 
-.title {
+.title, .input, .distanceFromYou {
     color: #663600;
     font-family: 'Merriweather', serif;
 }
 
-.input {
+#distanceFromYou {
     color: #663600;
-    font-family: 'Merriweather', serif;
+    font-family: 'Merriweather', serif; 
+    font-size: 24px;
+}
+
+
+#distFromYou{
+    color: #ed4699;
+    font-weight: bold;
 }
 
 .button {
@@ -125,4 +136,9 @@
 footer {
     padding: 25px;
     background: #ed4699;
+}
+
+.footer-copyright{
+    background-color: #ed4699;
+    font-family: "Helvetica Neue", Helvetica, sans-serif;
 }
