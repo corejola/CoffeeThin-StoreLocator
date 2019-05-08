@@ -207,17 +207,7 @@ function initMap() {
             $("#location-input").val("");
             $("#miles-input").val("");
 
-            function secondSearch(latitude, longitude) {
-
-                var secondOptions = {
-                    zoom: 10,
-                    center: { lat: latitude, lng: longitude }
-                }
-                map = new google.maps.Map(document.getElementById('map'), secondOptions);
-            };
-
-            secondSearch(latitude, longitude);
-            // return (latitude, longitude)
+            map.setZoom(10);
         });
 
     };
