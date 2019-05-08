@@ -121,6 +121,9 @@ function initMap() {
             var distance = document.getElementById('miles-input').value;
             var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/" + key + "/get-stores/" + latitude + "/" + longitude + "/" + distance;
 
+            //Push to DOM
+            $('#distFromYou').html(distance);
+
             // display markers function for nearby store locations relative to searched location. Begin storeMarker function
             function storeMarkers() {
                 $.ajax({
@@ -129,7 +132,7 @@ function initMap() {
                 }).then(function (response) {
 
                     var data = JSON.parse(response);
-                    console.log(data);
+                    // console.log(data);
                     var stores = data.stores;
 
                     for (var i = 0; i < stores.length; i++) {
@@ -172,7 +175,6 @@ function initMap() {
                             $('<p>').html('<a href=' + directionsURL + ' target="_blank">Directions to Store</a>'));
 
                         $('#JSON').append(names);
-
 
                         var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
 
@@ -223,5 +225,3 @@ function initMap() {
         $('#JSON').html("")
     }
 };
-
-
