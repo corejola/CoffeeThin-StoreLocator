@@ -77,7 +77,7 @@ function initMap() {
         event.preventDefault();
         
         // removes markers after submitting new search
-        removeMarkers();
+        deleteMarkers();
         // empties location list after submitting new search
         clearList();
         geocodeAddress(geocoder, map);
@@ -237,7 +237,7 @@ function initMap() {
     
     // LORRIE: REMOVES MARKERS FROM MAP, BUT KEEPS IN ARRAY.
     function clearMarkers() {
-        setMapOnALl(null);
+        setMapOnAll(null);
     }
 
     // LORRIE: SHOWS ANY MARKERS CURRENTLY IN ARRAY
@@ -251,14 +251,13 @@ function initMap() {
         markers = [];
     }
     
-    // removes markers after submitting new search
-    function removeMarkers() {
-        for (i = 0; i < markers.length; i++) {
-            markers[i].setMap(null);
-        }
-    };
+    // // LORRIE: REMOVED THIS LINE OF CODE AND REPLACED IT WITH deleteMarkers and clearMarkers: removes markers after submitting new search
+    // function removeMarkers() {
+    //     for (var i = 0; i < markers.length; i++) {
+    //         markers[i].setMap(null);
+    //     }
+    // };
 
-    
     function clearList() {
         $('#data').html("")
     }
