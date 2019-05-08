@@ -1,7 +1,8 @@
 var map;
 var markers = [];
 var infoWindow;
-var label = 1;
+// LORRIE: deleted var label as it was not used as noted; unneeded code
+// var label = 1;
 
 
 // initializes the map when page loads
@@ -38,8 +39,9 @@ function initMap() {
                 map: map,
                 icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
             });
-
+    // LORRIE: showMarkers();
             markers.push(marker);
+            showMarkers();
 
             // handles errors when user does not agree to let browser detect their location
         }, function () {
@@ -73,6 +75,7 @@ function initMap() {
 
     document.getElementById('locate-button').addEventListener('click', function (event) {
         event.preventDefault();
+        
         // removes markers after submitting new search
         removeMarkers();
         // empties location list after submitting new search
@@ -107,8 +110,9 @@ function initMap() {
                     position: results[0].geometry.location,
                     icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
                 });
-
+    // LORRIE:showMarkers();
                 markers.push(marker);
+                showMarkers();
 
             } else {
                 alert('Geocode was not successful for the following reason: ' + status);
@@ -171,7 +175,7 @@ function initMap() {
                             $('<p>').text(Math.floor(storeDistance) + " Miles Away"),
                             $('<p>').html('<a href=' + directionsURL + ' target="_blank">Directions to Store</a>'));
 
-                        $('#JSON').append(names);
+                        $('#data').append(names);
 
 
                         var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
@@ -187,8 +191,9 @@ function initMap() {
                             info: contentString,
                             label: (i + 1).toString()
                         })
-
+// LORRIE: showMarkers();
                         markers.push(marker);
+                        showMarkers();
 
                         // click event listener for marker infowindow. 
                         marker.addListener('click', function () {
@@ -223,14 +228,39 @@ function initMap() {
     };
     // search addresses/locations function end
 
+    // LORRIE: SET MAP ON ALL MARKERS IN ARRAY
+    function setMapOnAll(map) {
+        for (var i = 0; i < markers.length; i++){
+            markers[i].setMap(map);
+        }
+    }
+    
+    // LORRIE: REMOVES MARKERS FROM MAP, BUT KEEPS IN ARRAY.
+    function clearMarkers() {
+        setMapOnALl(null);
+    }
+
+    // LORRIE: SHOWS ANY MARKERS CURRENTLY IN ARRAY
+    function showMarkers() {
+        setMapOnAll(map);
+    }
+
+    // LORRIE: DELETES ALL MARKERS IN ARRAY BY REMOVING REFERENCES TO THEM.
+    function deleteMarkers() {
+        clearMarkers();
+        markers = [];
+    }
+    
     // removes markers after submitting new search
     function removeMarkers() {
         for (i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
     };
+
+    
     function clearList() {
-        $('#JSON').html("")
+        $('#data').html("")
     }
 };
 
