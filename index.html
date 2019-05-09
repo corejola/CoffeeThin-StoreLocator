@@ -60,11 +60,11 @@
                         <form>
                             <div class="form-group input">
                                 <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
-                                <input class="form-control" id="miles-input" placeholder="25 miles" type="text">
+                                <input class="form-control" id="miles-input" placeholder="25 miles" type="number">
                             </div>
                             <input id="locate-button" type="submit"
                                 class="btn waves-effect waves-orange btn-flat float-right button"
-                                style="background:#ed4699; color:white" value="Submit">
+                                style="background:#ed4699; color:white" value="SEARCH!">
                         </form>
                     </div>
                 </div>
@@ -77,10 +77,23 @@
                     </div>
                 </div>
                 <div class="col m4">
+<<<<<<< HEAD
                     <div class="vertical-menu scrollbar" id="styleScroll">
                         <ol id="data" class="custom-counter">
 
                         </ol>
+=======
+                    <div class="row">
+                        <div id="distanceFromYou">
+                            Find Coffee Thins Within <span id="distFromYou"></span> Miles From You!
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="vertical-menu scrollbar" id="styleScroll">
+                            <ol id="JSON" class="custom-counter">
+                            </ol>
+                        </div>
+>>>>>>> master
                     </div>
                 </div>
             </div>
@@ -98,6 +111,7 @@
 
 
         <script src="assets/js/app.js"></script>
+        <!-- Console log firebase for tests -->
         <script src="assets/js/firebaseMap.js"></script>
         <!-- link Google Maps API with callback function -->
         <script async defer
