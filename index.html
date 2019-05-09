@@ -28,11 +28,6 @@
 </head>
 
 <body>
-    <script>
-        $(document).ready(function () {
-            $('.sidenav').sidenav();
-        });
-    </script>
 
     <div class="container">
         <div class="row">
@@ -40,7 +35,6 @@
                 <div class="nav-wrapper">
                     <img src="https://static1.squarespace.com/static/5afc4cbc697a989b83350109/t/5bd90c5a03ce64d765902388/1544736464077/"
                         width="125px" height="60px" class="brand-logo"></img>
-                    <!-- <a href="#" class="brand-logo">TIERRA NUEVA</a> -->
                     <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="https://ediblecoffee.com/coffee">Products</a></li>
@@ -78,24 +72,25 @@
                         <form>
                             <div class="form-group input col s12">
                                 <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
-                                <input class="form-control col s12" id="miles-input" placeholder="25 miles" type="text">
+                                <input class="form-control col s12" id="miles-input" placeholder="25 miles"
+                                    type="number">
                             </div>
                             <input id="locate-button" type="submit"
                                 class="btn waves-effect waves-orange btn-flat float-right button col s12 m6 "
-                                style="background:#ed4699; color:white" value="Submit">
+                                style="background:#ed4699; color:white" value="Search!">
                         </form>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col s12 m12 l6">
+                <div class="col s12 m12 l8">
                     <!--Google Map-->
                     <div id="map">
                     </div>
                 </div>
 
-                <div class="col s12 m12 l6">
+                <div class="col s12 m12 l4">
                     <div class="row">
                         <div id="distanceFromYou">
                             Find Coffee Thins Within <span id="distFromYou"></span> Miles From You!

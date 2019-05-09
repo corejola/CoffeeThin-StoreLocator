@@ -2,11 +2,11 @@ body {
     display: flex;
     min-height: 100vh;
     flex-direction: column;
-  }
+}
 
 .main container {
     flex: 1 0 auto;
-  }
+}
 
 #map {
     height: 490px;
@@ -17,10 +17,11 @@ body {
     text-align: center;
 }
 
-.nav-wrapper{
+.nav-wrapper {
     height: 75px;
     width: 100%;
 }
+
 .nav-wrapper, .nav-content, .nav-extended {
     background-color: #663600;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
@@ -47,12 +48,11 @@ body {
 
 #distanceFromYou {
     color: #663600;
-    font-family: 'Merriweather', serif; 
+    font-family: 'Merriweather', serif;
     font-size: 24px;
 }
 
-
-#distFromYou{
+#distFromYou {
     color: #ed4699;
     font-weight: bold;
 }
@@ -72,7 +72,7 @@ body {
     margin-left: 10px;
     float: left;
     height: 400px;
-    width: 100%;
+    width: 98%;
     overflow-y: scroll;
     margin-bottom: 25px;
     font-size: 1.2em;
@@ -148,8 +148,15 @@ footer {
     background: #ed4699;
 }
 
-
-.footer-copyright{
+.footer-copyright {
     background-color: #ed4699;
     font-family: "Helvetica Neue", Helvetica, sans-serif;
+}
+
+div.col.s12.m12.l8 {
+    padding-left: 0;
+}
+
+div.row {
+    margin-bottom: 10px;
 }
