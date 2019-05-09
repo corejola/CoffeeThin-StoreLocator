@@ -130,7 +130,6 @@ function initMap() {
                 }).then(function (response) {
 
                     var data = JSON.parse(response);
-                    // console.log(data);
                     var stores = data.stores;
 
                     for (var i = 0; i < stores.length; i++) {
