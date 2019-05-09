@@ -7,37 +7,33 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coffee Thins Store Locator</title>
 
+    <!--JQUERY-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <!-- MATERIALIZE -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-
-    <!--Google fonts link  -->
-    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
-
+    <!--Google icon link-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- MATERIALIZE JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
-    <!-- jquery -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
-
-    <!-- Project Specific CSS -->
+    <!--Google fonts link  -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+    <!--Other Links: Stylesheet, Firebase, Lodash-->
     <link rel="stylesheet" href="assets/css/style.css">
-
     <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
-
     <!-- lodash JS library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.core.js"></script>
 </head>
 
 <body>
-    <div class="container">
 
+    <div class="container">
         <div class="row">
             <nav class="nav-extended">
                 <div class="nav-wrapper">
                     <img src="https://static1.squarespace.com/static/5afc4cbc697a989b83350109/t/5bd90c5a03ce64d765902388/1544736464077/"
-                        width="150px" class="brand-logo"></img>
-                    <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">Menu</i></a>
+                        width="125px" height="60px" class="brand-logo"></img>
+                    <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="https://ediblecoffee.com/coffee">Products</a></li>
                         <li><a href="https://ediblecoffee.com/press">Press</a></li>
@@ -46,47 +42,54 @@
                 </div>
             </nav>
         </div>
+
+        <ul class="sidenav" id="mobile-nav">
+            <li><a href="https://ediblecoffee.com/coffee">Products</a></li>
+            <li><a href="https://ediblecoffee.com/press">Press</a></li>
+            <li><a href="https://ediblecoffee.com/history">About Tierra Nueva</a></li>
+        </ul>
     </div>
 
-    <div class="container">
+    <div class="main container">
 
         <div class="row">
-            <div class="col m12">
-                <h4 class="text-center title"> Find Coffee Thins Near You!</h4>
+            <div class="col s12 m12">
+                <h4 class="text-center title col s12 col "> Find Coffee Thins Near You!</h4>
                 <div class="row">
-                    <!-- User Input Section-->
-                    <div class="col m6">
+                    <!-- User Input -->
+                    <div class="col s12 m6">
                         <form>
-                            <!-- Address or ZIP Input -->
-                            <div class="form-group">
+                            <!--address field-->
+                            <div class="form-group col s12">
                                 <strong><label for="location" style="color:#663600">Address or Zip
                                         Code</label></strong>
-                                <input class="form-control" id="location-input" placeholder="90095" type="text">
+                                <input class="form-control col s12" id="location-input" placeholder="90095" type="text">
                             </div>
                         </form>
                     </div>
-                    <div class="col m6">
-                        <!-- Distance Query -->
-                        <div class="form-group input">
-                            <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
-                            <input class="form-control" id="miles-input" placeholder="5 Miles" type="number">
-                        </div>
-                        <!-- Submit Button -->
-                        <input id="locate-button" type="submit"
-                            class="btn waves-effect waves-orange btn-flat float-right button"
-                            style="background:#ed4699; color:white" value="SEARCH!">
+                    <div class="col s12 m6">
+                        <form>
+                            <div class="form-group input col s12">
+                                <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
+                                <input class="form-control col s12" id="miles-input" placeholder="25 miles"
+                                    type="number">
+                            </div>
+                            <input id="locate-button" type="submit"
+                                class="btn waves-effect waves-orange btn-flat float-right button col s12 m6 "
+                                style="background:#ed4699; color:white" value="Search!">
+                        </form>
                     </div>
                 </div>
             </div>
 
             <div class="row">
-                <div class="col m8">
+                <div class="col s12 m12 l8">
                     <!--Google Map-->
                     <div id="map">
                     </div>
                 </div>
-                <div class="col m4">
-                    <!-- Search Results Column -->
+
+                <div class="col s12 m12 l4">
                     <div class="row">
                         <div id="distanceFromYou">
                             Find Coffee Thins Within <span id="distFromYou"></span> Miles From You!
@@ -101,7 +104,6 @@
                 </div>
             </div>
         </div>
-
         <footer>
             <img class="grey-text text-lighten-4 left valign-wrapper"
                 src="assets\images\Tierra-nueva-dunkin-assets\tn-contact.png" width="50px" height="50px">
@@ -109,14 +111,16 @@
                 © 2019 Tierra Nueva || 786.364.4444 || <a href="mailto:sales@tncruz.com">sales@tncruz.com</a>
                 <a class="grey-text text-lighten-4 right" href="https://ediblecoffee.com/">Edible Coffee</a>
         </footer>
+    </div>
+    </div>
 
-        <script src="assets/js/app.js"></script>
-        <!-- Console log firebase for tests -->
-        <script src="assets/js/firebaseMap.js"></script>
-        <!-- link Google Maps API with callback function -->
-        <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&libraries=places&callback=initMap">
-            </script>
+    <script src="assets/js/app.js"></script>
+    <!-- Console log firebase for tests -->
+    <script src="assets/js/firebaseMap.js"></script>
+    <!-- link Google Maps API with callback function -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&libraries=places&callback=initMap">
+        </script>
 
 </body>
 
