@@ -6,17 +6,26 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coffee Thins Store Locator</title>
+
     <!-- MATERIALIZE -->
-    <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+
     <!--Google fonts link  -->
     <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
-    <!-- Compiled and minified JavaScript -->
+
+    <!-- MATERIALIZE JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
+    <!-- jquery -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
+    <!-- Project Specific CSS -->
     <link rel="stylesheet" href="assets/css/style.css">
+
+    <!-- Firebase -->
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
+
+    <!-- lodash JS library -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.core.js"></script>
 </head>
 
@@ -28,7 +37,6 @@
                 <div class="nav-wrapper">
                     <img src="https://static1.squarespace.com/static/5afc4cbc697a989b83350109/t/5bd90c5a03ce64d765902388/1544736464077/"
                         width="150px" class="brand-logo"></img>
-                    <!-- <a href="#" class="brand-logo">TIERRA NUEVA</a> -->
                     <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">Menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="https://ediblecoffee.com/coffee">Products</a></li>
@@ -46,22 +54,25 @@
             <div class="col m12">
                 <h4 class="text-center title"> Find Coffee Thins Near You!</h4>
                 <div class="row">
-                    <!-- User Input -->
+                    <!-- User Input Section-->
                     <div class="col m6">
                         <form>
-                            <!--address field-->
+                            <!-- Address or ZIP Input -->
                             <div class="form-group">
                                 <strong><label for="location" style="color:#663600">Address or Zip
                                         Code</label></strong>
                                 <input class="form-control" id="location-input" placeholder="90095" type="text">
                             </div>
+                        </form>
                     </div>
                     <div class="col m6">
                         <form>
+                            <!-- Distance Query -->
                             <div class="form-group input">
                                 <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
-                                <input class="form-control" id="miles-input" placeholder="25 miles" type="number">
+                                <input class="form-control" id="miles-input" placeholder="5 miles" type="number">
                             </div>
+                            <!-- Submit Button -->
                             <input id="locate-button" type="submit"
                                 class="btn waves-effect waves-orange btn-flat float-right button"
                                 style="background:#ed4699; color:white" value="SEARCH!">
@@ -77,6 +88,7 @@
                     </div>
                 </div>
                 <div class="col m4">
+                    <!-- Search Results Column -->
                     <div class="row">
                         <div id="distanceFromYou">
                             Find Coffee Thins Within <span id="distFromYou"></span> Miles From You!
@@ -84,13 +96,12 @@
                     </div>
                     <div class="row">
                         <div class="vertical-menu scrollbar" id="styleScroll">
-                            <ol id="JSON" class="custom-counter">
+                            <ol id="data" class="custom-counter">
                             </ol>
                         </div>
                     </div>
                 </div>
             </div>
-
         </div>
 
         <footer>
@@ -100,8 +111,6 @@
                 © 2019 Tierra Nueva || 786.364.4444 || <a href="mailto:sales@tncruz.com">sales@tncruz.com</a>
                 <a class="grey-text text-lighten-4 right" href="https://ediblecoffee.com/">Edible Coffee</a>
         </footer>
-
-
 
         <script src="assets/js/app.js"></script>
         <!-- Console log firebase for tests -->

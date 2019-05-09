@@ -1,8 +1,6 @@
 var map;
 var markers = [];
 var infoWindow;
-var label = 1;
-
 
 // initializes the map when page loads
 function initMap() {
@@ -217,11 +215,11 @@ function initMap() {
 
     // removes markers after submitting new search
     function removeMarkers() {
-        for (i = 0; i < markers.length; i++) {
+        for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
     };
     function clearList() {
-        $('#JSON').html("")
+        $('#data').html("")
     }
 };
