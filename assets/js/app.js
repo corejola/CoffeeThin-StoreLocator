@@ -1,8 +1,11 @@
+// jQuery plugin for materialize navbar
+$(document).ready(function () {
+    $('.sidenav').sidenav();
+});
+
 var map;
 var markers = [];
 var infoWindow;
-var label = 1;
-
 
 // initializes the map when page loads
 function initMap() {
@@ -132,7 +135,6 @@ function initMap() {
                 }).then(function (response) {
 
                     var data = JSON.parse(response);
-                    // console.log(data);
                     var stores = data.stores;
 
                     for (var i = 0; i < stores.length; i++) {
@@ -182,7 +184,7 @@ function initMap() {
                             content: contentString
                         });
 
-                        // beginning of code to add number to marker
+                        // create store markers
                         var marker = new google.maps.Marker({
                             position: { lat: parseFloat(storesLat), lng: parseFloat(storesLng) },
                             map: map,
@@ -209,6 +211,7 @@ function initMap() {
             $("#location-input").val("");
             $("#miles-input").val("");
 
+            // resets zoom after new search
             map.setZoom(10);
         });
 
@@ -217,10 +220,13 @@ function initMap() {
 
     // removes markers after submitting new search
     function removeMarkers() {
-        for (i = 0; i < markers.length; i++) {
+        for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
+        markers = [];
     };
+
+    // clears location list after new search
     function clearList() {
         $('#JSON').html("")
     }
