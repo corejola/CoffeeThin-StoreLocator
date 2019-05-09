@@ -6,31 +6,43 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Coffee Thins Store Locator</title>
+
+    <!--JQUERY-->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+
     <!-- MATERIALIZE -->
     <!-- Compiled and minified CSS -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
-    <!--Google fonts link  -->
-    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+    <!--Google icon link-->
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <!-- Compiled and minified JavaScript -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <!--Google fonts link  -->
+    <link href="https://fonts.googleapis.com/css?family=Merriweather" rel="stylesheet">
+
+    <!--Other Links: Stylesheet, Firebase, Lodash-->
     <link rel="stylesheet" href="assets/css/style.css">
     <script src="https://www.gstatic.com/firebasejs/5.10.1/firebase.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/lodash.js/4.17.11/lodash.core.js"></script>
 </head>
 
 <body>
-    <div class="container">
+    <script>
+        $(document).ready(function () {
+            $('.sidenav').sidenav();
+        });
+    </script>
 
+    <div class="container">
         <div class="row">
-            <nav class="nav-extended col s12">
-                <div class="nav-wrapper col s12">
+            <nav class="nav-extended">
+                <div class="nav-wrapper">
                     <img src="https://static1.squarespace.com/static/5afc4cbc697a989b83350109/t/5bd90c5a03ce64d765902388/1544736464077/"
-                        width="150px" class="brand-logo col s2"></img>
+                        width="125px" height="60px" class="brand-logo"></img>
                     <!-- <a href="#" class="brand-logo">TIERRA NUEVA</a> -->
-                    <a href="#" data-target="mobile-demo" class="sidenav-trigger col s2"><i class="material-icons col s2">Menu</i></a>
-                    <ul id="nav-mobile" class="right hide-on-med-and-down col s6">
+                    <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+                    <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="https://ediblecoffee.com/coffee">Products</a></li>
                         <li><a href="https://ediblecoffee.com/press">Press</a></li>
                         <li><a href="https://ediblecoffee.com/history">About Tierra Nueva</a></li>
@@ -38,6 +50,12 @@
                 </div>
             </nav>
         </div>
+
+        <ul class="sidenav" id="mobile-nav">
+            <li><a href="https://ediblecoffee.com/coffee">Products</a></li>
+            <li><a href="https://ediblecoffee.com/press">Press</a></li>
+            <li><a href="https://ediblecoffee.com/history">About Tierra Nueva</a></li>
+        </ul>
     </div>
 
     <div class="main container">
@@ -100,14 +118,15 @@
                 <a class="grey-text text-lighten-4 right" href="https://ediblecoffee.com/">Edible Coffee</a>
         </footer>
     </div>
+    </div>
 
-        <script src="assets/js/app.js"></script>
-        <!-- Console log firebase for tests -->
-        <script src="assets/js/firebaseMap.js"></script>
-        <!-- link Google Maps API with callback function -->
-        <script async defer
-            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&libraries=places&callback=initMap">
-            </script>
+    <script src="assets/js/app.js"></script>
+    <!-- Console log firebase for tests -->
+    <script src="assets/js/firebaseMap.js"></script>
+    <!-- link Google Maps API with callback function -->
+    <script async defer
+        src="https://maps.googleapis.com/maps/api/js?key=AIzaSyA60hFs9KRD8uEhw90wHPR0WhVowk4rL5A&libraries=places&callback=initMap">
+        </script>
 
 </body>
 
