@@ -1,7 +1,8 @@
 var map;
 var markers = [];
 var infoWindow;
-var label = 1;
+// LORRIE: DELETED VAR LABEL = 1 (NOTE NEEDED FOR CODE)
+// var label = 1;
 
 
 // initializes the map when page loads
@@ -121,6 +122,9 @@ function initMap() {
             var distance = document.getElementById('miles-input').value;
             var queryURL = "https://storelocator.velvethammerbranding.com/api/v1/" + key + "/get-stores/" + latitude + "/" + longitude + "/" + distance;
 
+            //Push to DOM
+            $('#distFromYou').html(distance);
+
             // display markers function for nearby store locations relative to searched location. Begin storeMarker function
             function storeMarkers() {
                 $.ajax({
@@ -129,7 +133,7 @@ function initMap() {
                 }).then(function (response) {
 
                     var data = JSON.parse(response);
-                    console.log(data);
+                    // console.log(data);
                     var stores = data.stores;
 
                     for (var i = 0; i < stores.length; i++) {
@@ -173,7 +177,6 @@ function initMap() {
 
                         $('#JSON').append(names);
 
-
                         var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
 
                         var storeInfowindow = new google.maps.InfoWindow({
@@ -207,25 +210,16 @@ function initMap() {
             $("#location-input").val("");
             $("#miles-input").val("");
 
-            function secondSearch(latitude, longitude) {
-
-                var secondOptions = {
-                    zoom: 10,
-                    center: { lat: latitude, lng: longitude }
-                }
-                map = new google.maps.Map(document.getElementById('map'), secondOptions);
-            };
-
-            secondSearch(latitude, longitude);
-            // return (latitude, longitude)
+            map.setZoom(10);
         });
 
     };
     // search addresses/locations function end
 
     // removes markers after submitting new search
+    // ADDED VAR TO LOOP (PREVIOUSLY MISSING, MAKING A GLOBAL VARIABLE)
     function removeMarkers() {
-        for (i = 0; i < markers.length; i++) {
+        for (var i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
     };
@@ -233,5 +227,3 @@ function initMap() {
         $('#JSON').html("")
     }
 };
-
-
