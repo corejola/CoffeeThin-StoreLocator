@@ -172,7 +172,7 @@ function initMap() {
                             $('<p>').text(Math.floor(storeDistance) + " Miles Away"),
                             $('<p>').html('<a href=' + directionsURL + ' target="_blank">Directions to Store</a>'));
 
-                        $('#JSON').append(names);
+                        $('#data').append(names);
 
                         var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
 
@@ -215,7 +215,7 @@ function initMap() {
 
     // removes markers after submitting new search
     function removeMarkers() {
-        for (var i = 0; i < markers.length; i++) {
+        for (i = 0; i < markers.length; i++) {
             markers[i].setMap(null);
         }
     };
