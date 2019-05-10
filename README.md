@@ -29,7 +29,7 @@ Wire Frame:
 
 ### Usage:
 1. Upon loading of the Tierra Nueva Coffee Thins Locator landing page, the page will prompt the user to request current location. The map will center on the user's current location.
-2. User inputs the address or zip code in which they are generally located, or an area the want to search. 
+2. User inputs the address or zip code in which they want to search. 
 3. User inputs the range of miles to perform search.
 4. Site will provide list of Retailers, within the mileage range that carry Tierra Nueva Coffee thins.
 5. List from the Retailers will provide the Retailer Name, Retailer Address, Products carried at location, Miles away & link to directions based on search parameters.
