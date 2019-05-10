@@ -1,4 +1,5 @@
 # Project-01 TIERRA NUEVA – Whole Coffee – Coffee Thins: Store Locator Landing Page
+Link to Live Application: http://corejola.github.io/Project-01
 
 ## Team:
     Lorraine Baynosa (Github: lorrainebaynosa)
