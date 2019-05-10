@@ -31,8 +31,9 @@
         <div class="row">
             <nav class="nav-extended">
                 <div class="nav-wrapper">
-                    <img src="https://static1.squarespace.com/static/5afc4cbc697a989b83350109/t/5bd90c5a03ce64d765902388/1544736464077/"
-                        width="125px" height="60px" class="brand-logo"></img>
+                    <a href="https://ediblecoffee.com/">
+                        <img src="https://static1.squarespace.com/static/5afc4cbc697a989b83350109/t/5bd90c5a03ce64d765902388/1544736464077/"
+                            width="125px" height="60px" class="brand-logo"></img></a>
                     <a href="#" data-target="mobile-nav" class="sidenav-trigger"><i class="material-icons">menu</i></a>
                     <ul id="nav-mobile" class="right hide-on-med-and-down">
                         <li><a href="https://ediblecoffee.com/coffee">Products</a></li>
@@ -68,16 +69,25 @@
                         </form>
                     </div>
                     <div class="col s12 m6">
-
                         <div class="form-group input col s12">
                             <strong><label for="miles" style="color: #663600">Within Miles</label></strong>
-                            <input class="form-control col s12" id="miles-input" placeholder="25 miles" type="number">
+                            <input class="form-control col s12" id="miles-input" placeholder="25" type="number">
                         </div>
                         <input id="locate-button" type="submit"
                             class="btn waves-effect waves-orange btn-flat float-right button col s12 m6 "
                             style="background:#ed4699; color:white" value="Search!">
-
                     </div>
+                </div>
+            </div>
+
+            <!-- Modal Structure for error notification -->
+            <div id="modal1" class="modal">
+                <div class="modal-content">
+                    <h4>Modal Header</h4>
+                    <p>A bunch of text</p>
+                </div>
+                <div class="modal-footer">
+                    <a href="#!" class="modal-close waves-effect waves-green btn-flat">OK</a>
                 </div>
             </div>
 
@@ -114,7 +124,7 @@
     </div>
 
     <script src="assets/js/app.js"></script>
-    <!-- Console log firebase for tests -->
+    <!-- firebase to log addresses entered -->
     <script src="assets/js/firebaseMap.js"></script>
     <!-- link Google Maps API with callback function -->
     <script async defer

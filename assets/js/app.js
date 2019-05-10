@@ -42,6 +42,7 @@ function initMap() {
                 icon: 'https://developers.google.com/maps/documentation/javascript/examples/full/images/beachflag.png'
             });
 
+            // push marker into array so can clear later
             markers.push(marker);
 
             // handles errors when user does not agree to let browser detect their location
@@ -114,7 +115,14 @@ function initMap() {
                 markers.push(marker);
 
             } else {
-                alert('Geocode was not successful for the following reason: ' + status);
+                //initialize modal           
+                $('.modal').modal();
+
+                //open modal from code
+                $('#modal1').modal('open');
+
+                // display error message in modal
+                $(".modal-content").text('Search was not successful for the following reason: ' + status)
             };
 
             // Query parameters for pulling store locator API
@@ -165,10 +173,10 @@ function initMap() {
                             })
                             .reduce(function (result, p) { return result + p.title + '<br>'; }, '');
 
-                        // content for infowindow
+                        // url to googlemaps direction
                         var directionsURL = "https://www.google.com/maps/dir/?api=1&origin=" + encodeURIComponent(address) + "/&destination=/" + encodeURIComponent(storeAddress) + "/%2C/" + encodeURIComponent(storeCity) + "/%2C/" + encodeURIComponent(storeState) + "/%2C/" + encodeURIComponent(storeZip);
 
-                        //add the store information into the HTML id JSON
+                        //add the store information into the HTML id data
                         var names = $("<li>").append(
                             $('<p>').text(retailDisplay).attr("class", "retailers"),
                             $('<p>').html(storeAddress + "<br>" + storeCity + ", " + storeState + " " + storeZip),
@@ -178,6 +186,7 @@ function initMap() {
 
                         $('#data').append(names);
 
+                        // content for infowindow
                         var contentString = '<span>' + retailDisplay + '<br>' + storeAddress + '<br>' + storeCity + ', ' + storeState + ' ' + storeZip + '<br>' + "Products: " + productHTML + '<br>' + '<a href=' + directionsURL + ' target="_blank">Directions to Store</a>' + '</span>'
 
                         var storeInfowindow = new google.maps.InfoWindow({
@@ -207,7 +216,7 @@ function initMap() {
             };
             storeMarkers();
 
-            // clears input text boxes after search is submitted
+            // clears input boxes after search is submitted
             $("#location-input").val("");
             $("#miles-input").val("");
 
@@ -230,4 +239,5 @@ function initMap() {
     function clearList() {
         $('#data').html("")
     }
+
 };
