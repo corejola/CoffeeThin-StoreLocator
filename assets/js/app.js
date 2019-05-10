@@ -122,7 +122,7 @@ function initMap() {
                 $('#modal1').modal('open');
 
                 // display error message in modal
-                $(".modal-content").text('Geocode was not successful for the following reason: ' + status)
+                $(".modal-content").text('Search was not successful for the following reason: ' + status)
             };
 
             // Query parameters for pulling store locator API
