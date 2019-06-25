@@ -24,8 +24,8 @@ https://drive.google.com/open?id=1cSFDF5N4XBpez4A6QRmcaN52cYrMtT_k
 For Frontend & Backend Pseudo Code
 
 Wire Frame:
-![Alt text](assets\wireframe\project-1-wireframe_001.png "Project-1 Wireframe")
-![Alt text](assets\wireframe\project-1-wireframe_002.png "Project-1 Wireframe")
+![Alt text](assets/wireframe/project-1-wireframe_001.png "Project-1 Wireframe")
+![Alt text](assets/wireframe/project-1-wireframe_002.png "Project-1 Wireframe")
 
 ### Usage:
 1. Upon loading of the Tierra Nueva Coffee Thins Locator landing page, the page will prompt the user to request current location. The map will center on the user's current location.
