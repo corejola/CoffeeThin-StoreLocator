@@ -1,5 +1,5 @@
 # Project-01 TIERRA NUEVA – Whole Coffee – Coffee Thins: Store Locator Landing Page
-Link to Live Application: http://corejola.github.io/Project-01
+Link to Live Application: [Coffee Thins Store Locator](https://corejola.github.io/CoffeeThin-StoreLocator/)
 
 ## Team:
     Lorraine Baynosa (Github: lorrainebaynosa)
@@ -9,14 +9,14 @@ Link to Live Application: http://corejola.github.io/Project-01
 
 ## APIs Utilized:
 1. Velvet Branding Store Locator API
-2. Google Maps/Places API
-3. Firebase
+2. [Google Maps/Places API](https://developers.google.com/maps/documentation/)
+3. [Firebase](https://firebase.google.com/)
 
 ## Libraries/Frameworks Utilized:
-1. Jquery
-2. lodash JS
-3. Materialze CSS Framework
-4. Google Fonts
+1. [Jquery](https://jquery.com/)
+2. [lodash JS](https://lodash.com/)
+3. [Materialze CSS Framework](https://materializecss.com/)
+4. [Google Fonts](https://fonts.google.com/)
 
 ### Project Files: Google Drive Project Documentation
 https://drive.google.com/open?id=1cSFDF5N4XBpez4A6QRmcaN52cYrMtT_k
