@@ -1,6 +1,8 @@
 # Project-01 TIERRA NUEVA – Whole Coffee – Coffee Thins: Store Locator Landing Page
 Link to Live Application: [Coffee Thins Store Locator](https://corejola.github.io/CoffeeThin-StoreLocator/)
 
+![Demo](assets/images/TierraNuevaStoreLocator.png "Project-1 Wireframe")
+
 ## Team:
     Lorraine Baynosa (Github: lorrainebaynosa)
     Ben Kha (Github: Benk0033)
@@ -23,7 +25,7 @@ https://drive.google.com/open?id=1cSFDF5N4XBpez4A6QRmcaN52cYrMtT_k
 
 For Frontend & Backend Pseudo Code
 
-Wire Frame:
+### Wire Frame:
 ![Alt text](assets/wireframe/project-1-wireframe_001.png "Project-1 Wireframe")
 ![Alt text](assets/wireframe/project-1-wireframe_002.png "Project-1 Wireframe")
 
