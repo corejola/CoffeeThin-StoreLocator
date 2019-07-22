@@ -1,5 +1,5 @@
 # Project-01 TIERRA NUEVA – Whole Coffee – Coffee Thins: Store Locator Landing Page
-Link to Live Application: [Coffee Thins Store Locator](https://corejola.github.io/CoffeeThin-StoreLocator/)
+## **GOOGLE MAPS API KEY CURRENTLY DISABLED**
 
 ![Demo](assets/storeLocatorDemo.gif "Project-1 Wireframe")
 
